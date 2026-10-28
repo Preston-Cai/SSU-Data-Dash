@@ -9,7 +9,7 @@ Choose the document that matches what you need:
 | Need | Read |
 |---|---|
 | Understand the approach without much ML background | [`docs/HOW_WE_BUILT_THE_MODEL.md`](docs/HOW_WE_BUILT_THE_MODEL.md) |
-| Connect the important ideas to executable source code | [`docs/CODE_WALKTHROUGH.ipynb`](docs/CODE_WALKTHROUGH.ipynb) |
+| Connect the important ideas to executable source code | [`docs/CODE_WALKTHROUGH.ipynb`](docs/WALKTHROUGH.ipynb) |
 | Run, retrain, or locate the selected model | [`FINAL_MODEL.md`](FINAL_MODEL.md) |
 | Review every experiment and technical decision | [`docs/EXPERIMENT_REPORT.md`](docs/EXPERIMENT_REPORT.md) |
 
