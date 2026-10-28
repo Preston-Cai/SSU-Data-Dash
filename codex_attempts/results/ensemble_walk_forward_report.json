@@ -1,0 +1,14 @@
+{
+  "off_market": {
+    "n": 10069,
+    "mape": 10.0317,
+    "mdape": 7.6357,
+    "median_signed_error": -2.3272
+  },
+  "list_aware": {
+    "n": 10069,
+    "mape": 5.2968,
+    "mdape": 4.083,
+    "median_signed_error": -0.984
+  }
+}

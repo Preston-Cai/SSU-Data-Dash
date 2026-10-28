@@ -32,6 +32,41 @@ python run.py predict    # write both submission files
 python run.py check      # check them
 ```
 
+The custom neural-model experiments are collected under
+[`mlp_attempts/`](mlp_attempts/README.md), separate from the starter runner and
+the selected Codex ensemble:
+
+```
+pip install -r mlp_attempts/requirements.txt
+python -m mlp_attempts.exec train --epochs 10
+python -m mlp_attempts.exec test
+python -m mlp_attempts.exec report
+```
+
+Every checkpoint save gets its actual save time in a new filename, such as
+`mlp_attempts/checkpoints/off_market_20261027-153000-123456.pt`. Testing and `--resume`
+automatically select the newest checkpoint for each track. Resume an exact file with:
+
+```
+python -m mlp_attempts.exec train --resume-from mlp_attempts/checkpoints/off_market_20261027-153000-123456.pt --epochs 10
+```
+
+Test two exact model checkpoints by supplying off-market first and list-aware second:
+
+```
+python -m mlp_attempts.exec test --checkpoints mlp_attempts/checkpoints/off_market_TIMESTAMP.pt mlp_attempts/checkpoints/list_aware_TIMESTAMP.pt
+```
+On Windows, press Q during training to save and stop cleanly; some native math
+libraries abort on Ctrl+C before Python can save. On other platforms, use Ctrl+C.
+Continue later with:
+
+```
+python -m mlp_attempts.exec train --resume --epochs 10
+```
+
+`--epochs` is the number of epochs to run now, including when resuming. Train one track with
+`--track off_market` or `--track list_aware`.
+
 On Windows, use `py` if `python` is not found.
 
 ## What to edit

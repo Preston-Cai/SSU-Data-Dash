@@ -4,6 +4,7 @@ outputs/
 reports/
 figures/
 submissions/
+checkpoints/
 
 # Python and notebook clutter
 __pycache__/
@@ -11,6 +12,18 @@ __pycache__/
 .ipynb_checkpoints/
 .venv/
 venv/
+.vscode/
 .DS_Store
 .Rhistory
 report/*.pdf
+
+# Generated MLP experiment artifacts (keep mlp_attempts source tracked)
+mlp_attempts/checkpoints/
+mlp_attempts/outputs/
+mlp_attempts/reports/
+mlp_attempts/figures/
+
+# Large fitted Codex models (keep source, docs, and compact results tracked)
+codex_attempts/artifacts/*
+!codex_attempts/artifacts/README.md
+codex_attempts/results/*.csv

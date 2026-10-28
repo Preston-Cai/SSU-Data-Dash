@@ -1,0 +1,223 @@
+{
+  "validation_protocol": {
+    "weight_selection_months": [
+      "2025-09",
+      "2025-10",
+      "2025-11"
+    ],
+    "untouched_official_months": [
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05"
+    ]
+  },
+  "tracks": {
+    "off_market": {
+      "overall": {
+        "n": 10069,
+        "mape": 9.85,
+        "mape_95ci": [
+          9.65,
+          10.03
+        ],
+        "mdape": 7.28,
+        "mdape_95ci": [
+          7.11,
+          7.46
+        ],
+        "median_signed_error": -0.86
+      },
+      "by_month": {
+        "2025-12": {
+          "n": 1238,
+          "mape": 9.73,
+          "mape_95ci": [
+            9.21,
+            10.3
+          ],
+          "mdape": 7.06,
+          "mdape_95ci": [
+            6.7,
+            7.71
+          ],
+          "median_signed_error": 1.79
+        },
+        "2026-01": {
+          "n": 1058,
+          "mape": 9.66,
+          "mape_95ci": [
+            9.09,
+            10.21
+          ],
+          "mdape": 7.17,
+          "mdape_95ci": [
+            6.73,
+            7.89
+          ],
+          "median_signed_error": 0.44
+        },
+        "2026-02": {
+          "n": 1442,
+          "mape": 9.68,
+          "mape_95ci": [
+            9.22,
+            10.18
+          ],
+          "mdape": 7.06,
+          "mdape_95ci": [
+            6.67,
+            7.52
+          ],
+          "median_signed_error": -1.87
+        },
+        "2026-03": {
+          "n": 1816,
+          "mape": 9.75,
+          "mape_95ci": [
+            9.25,
+            10.28
+          ],
+          "mdape": 7.05,
+          "mdape_95ci": [
+            6.63,
+            7.45
+          ],
+          "median_signed_error": -1.46
+        },
+        "2026-04": {
+          "n": 2224,
+          "mape": 9.75,
+          "mape_95ci": [
+            9.38,
+            10.11
+          ],
+          "mdape": 7.32,
+          "mdape_95ci": [
+            6.9,
+            7.68
+          ],
+          "median_signed_error": -1.12
+        },
+        "2026-05": {
+          "n": 2291,
+          "mape": 10.27,
+          "mape_95ci": [
+            9.9,
+            10.7
+          ],
+          "mdape": 7.67,
+          "mdape_95ci": [
+            7.32,
+            8.04
+          ],
+          "median_signed_error": -1.45
+        }
+      }
+    },
+    "list_aware": {
+      "overall": {
+        "n": 10069,
+        "mape": 5.25,
+        "mape_95ci": [
+          5.16,
+          5.35
+        ],
+        "mdape": 4.08,
+        "mdape_95ci": [
+          4.0,
+          4.18
+        ],
+        "median_signed_error": -0.69
+      },
+      "by_month": {
+        "2025-12": {
+          "n": 1238,
+          "mape": 4.88,
+          "mape_95ci": [
+            4.62,
+            5.14
+          ],
+          "mdape": 3.9,
+          "mdape_95ci": [
+            3.67,
+            4.1
+          ],
+          "median_signed_error": -0.25
+        },
+        "2026-01": {
+          "n": 1058,
+          "mape": 4.87,
+          "mape_95ci": [
+            4.62,
+            5.16
+          ],
+          "mdape": 3.87,
+          "mdape_95ci": [
+            3.6,
+            4.23
+          ],
+          "median_signed_error": -0.37
+        },
+        "2026-02": {
+          "n": 1442,
+          "mape": 5.2,
+          "mape_95ci": [
+            4.98,
+            5.41
+          ],
+          "mdape": 4.25,
+          "mdape_95ci": [
+            3.97,
+            4.45
+          ],
+          "median_signed_error": -0.69
+        },
+        "2026-03": {
+          "n": 1816,
+          "mape": 5.37,
+          "mape_95ci": [
+            5.13,
+            5.59
+          ],
+          "mdape": 4.1,
+          "mdape_95ci": [
+            3.9,
+            4.39
+          ],
+          "median_signed_error": -1.08
+        },
+        "2026-04": {
+          "n": 2224,
+          "mape": 5.29,
+          "mape_95ci": [
+            5.09,
+            5.5
+          ],
+          "mdape": 3.98,
+          "mdape_95ci": [
+            3.75,
+            4.16
+          ],
+          "median_signed_error": -0.83
+        },
+        "2026-05": {
+          "n": 2291,
+          "mape": 5.54,
+          "mape_95ci": [
+            5.33,
+            5.74
+          ],
+          "mdape": 4.37,
+          "mdape_95ci": [
+            4.13,
+            4.59
+          ],
+          "median_signed_error": -0.8
+        }
+      }
+    }
+  }
+}

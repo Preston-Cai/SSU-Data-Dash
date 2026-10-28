@@ -1,0 +1,2 @@
+# Install after the starter requirements.txt when using the MLP workflow.
+torch>=2.5

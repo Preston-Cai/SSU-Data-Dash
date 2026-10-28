@@ -1,0 +1,44 @@
+{
+  "off_market": {
+    "components": [
+      "recent_prediction",
+      "text_prediction",
+      "xgboost_prediction"
+    ],
+    "weights": [
+      0.15,
+      0.2,
+      0.65
+    ],
+    "calibration": 0.9772745745864185,
+    "prevalidation_mdape": 7.109192470183696,
+    "prevalidation_mape": 9.76120523556915,
+    "rows": 6152,
+    "months": [
+      "2025-09",
+      "2025-10",
+      "2025-11"
+    ]
+  },
+  "list_aware": {
+    "components": [
+      "regular_prediction",
+      "recent_prediction",
+      "text_prediction"
+    ],
+    "weights": [
+      0.35,
+      0.35,
+      0.3
+    ],
+    "calibration": 0.9865499704372777,
+    "prevalidation_mdape": 3.8259033877097615,
+    "prevalidation_mape": 4.929372275038993,
+    "rows": 6152,
+    "months": [
+      "2025-09",
+      "2025-10",
+      "2025-11"
+    ]
+  }
+}

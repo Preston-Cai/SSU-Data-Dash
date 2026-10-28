@@ -1,0 +1,30 @@
+{
+  "off_market": {
+    "raw": {
+      "n": 10069,
+      "mape": 10.4103,
+      "mdape": 7.7329,
+      "median_signed_error": 1.0649
+    },
+    "calibrated": {
+      "n": 10069,
+      "mape": 10.2079,
+      "mdape": 7.7798,
+      "median_signed_error": -2.2404
+    }
+  },
+  "list_aware": {
+    "raw": {
+      "n": 10069,
+      "mape": 5.4627,
+      "mdape": 4.293,
+      "median_signed_error": 0.8049
+    },
+    "calibrated": {
+      "n": 10069,
+      "mape": 5.385,
+      "mdape": 4.1412,
+      "median_signed_error": -0.9299
+    }
+  }
+}
