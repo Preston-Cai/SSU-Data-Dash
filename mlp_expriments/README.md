@@ -1,7 +1,7 @@
 # MLP experiments
 
 This folder contains the complete custom PyTorch MLP workflow. It is separate
-from both the starter commands and `codex_attempts/`.
+from both the starter commands and `gbt_ensemble_experiments/`.
 
 ## Folder layout
 
@@ -105,7 +105,7 @@ python -m mlp_attempts.exec report
 ```
 
 The report and figure are written inside this folder under `reports/` and
-`figures/`, rather than mixing with starter or Codex outputs.
+`figures/`.
 
 ## Current saved work
 

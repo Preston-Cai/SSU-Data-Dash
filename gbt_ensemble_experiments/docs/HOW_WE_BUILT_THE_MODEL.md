@@ -1,9 +1,5 @@
 # How we improved the home-price model
 
-This is the short, non-specialist explanation of the experiment. It is written
-for a computer science student who understands code and data, but does not need
-much machine-learning background.
-
 ## The problem we were solving
 
 We needed to predict how much a home would sell for. There were two versions of
@@ -34,7 +30,7 @@ consider the home's physical details, but they would also look at nearby sales,
 recent changes in the market, similar property types, and the wording of the
 listing. That became the experimental roadmap.
 
-Second, I kept the new work in a separate `codex_attempts` folder. This meant
+Second, I kept the new work in a separate `gbt_ensemble_experiments` folder. This meant
 I could try aggressive changes without damaging the user's existing workflow.
 It also made unsuccessful experiments useful: their code and results could be
 kept as evidence instead of being mixed into the final model.

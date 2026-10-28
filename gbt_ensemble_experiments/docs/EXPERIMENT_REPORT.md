@@ -1,9 +1,7 @@
 # Complete experiment handoff
 
 This document is the source of truth for the isolated experiments in
-`codex_attempts/`. It is deliberately self-contained so that a person or a
-new Codex chat can understand the work without access to the conversation that
-created it.
+`gbt_ensemble_experiments/`.
 
 For an executable bridge from this explanation to the exact implementation,
 open `CODE_WALKTHROUGH.ipynb` in this directory. It displays definitions from
@@ -113,7 +111,7 @@ training features.
 ### 1. Isolate the work
 
 All new scripts, result files, models, and submissions were placed under
-`codex_attempts/`. The starter workflow and the user's existing custom model
+`gbt_ensemble_experiments/`. The starter workflow and the user's existing custom model
 were not used as scratch space. This makes the alternative approach easy to
 audit or remove and prevents accidental contamination of the old files.
 
@@ -311,18 +309,18 @@ Run commands from the repository root in PowerShell. The experiment used the
 project's `.venv`:
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r "codex_attempts\requirements-attempts.txt"
+.\.venv\Scripts\python.exe -m pip install -r "gbt_ensemble_experiments\requirements-attempts.txt"
 
 # Rebuild the final six-month component predictions and report. This is slow.
-.\.venv\Scripts\python.exe "codex_attempts\validate.py"
+.\.venv\Scripts\python.exe "gbt_ensemble_experiments\validate.py"
 .\.venv\Scripts\python.exe run.py report
 
 # Train the frozen final models once and create a timestamped artifact.
-.\.venv\Scripts\python.exe "codex_attempts\train_final.py"
+.\.venv\Scripts\python.exe "gbt_ensemble_experiments\train_final.py"
 
 # Predict from an already trained artifact; this does not retrain.
-.\.venv\Scripts\python.exe "codex_attempts\predict_artifact.py" `
-  "codex_attempts\artifacts\TIMESTAMP\ensemble_checkpoint.pkl"
+.\.venv\Scripts\python.exe "gbt_ensemble_experiments\predict_artifact.py" `
+  "gbt_ensemble_experiments\artifacts\TIMESTAMP\ensemble_checkpoint.pkl"
 ```
 
 The finalized artifact from this run is

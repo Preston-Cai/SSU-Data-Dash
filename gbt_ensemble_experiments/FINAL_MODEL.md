@@ -27,7 +27,7 @@ Validated performance over December 2025-May 2026:
 The complete fitted model is:
 
 ```text
-codex_attempts/artifacts/20261028-000439-310846/ensemble_checkpoint.pkl
+gbt_ensemble_experiments/artifacts/20261028-000439-310846/ensemble_checkpoint.pkl
 ```
 
 This checkpoint contains the fitted feature builders, historical encoders,
@@ -47,14 +47,14 @@ submission_list_aware.csv
 Run from the repository root in PowerShell:
 
 ```powershell
-.\.venv\Scripts\python.exe "codex_attempts\train_final.py"
+.\.venv\Scripts\python.exe "gbt_ensemble_experiments\train_final.py"
 ```
 
 This trains the selected configuration once on all permitted sales through May
 2026. It creates a new save-time-stamped directory under:
 
 ```text
-codex_attempts/artifacts/
+gbt_ensemble_experiments/artifacts/
 ```
 
 The new directory contains `ensemble_checkpoint.pkl`, native component models,
@@ -64,7 +64,7 @@ existing artifact.
 If the isolated dependencies are missing, install them first:
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r "codex_attempts\requirements-attempts.txt"
+.\.venv\Scripts\python.exe -m pip install -r "gbt_ensemble_experiments\requirements-attempts.txt"
 ```
 
 ## Predict without retraining
@@ -72,23 +72,23 @@ If the isolated dependencies are missing, install them first:
 Pass the exact checkpoint file, not its directory:
 
 ```powershell
-.\.venv\Scripts\python.exe "codex_attempts\predict_artifact.py" `
-  "codex_attempts\artifacts\20261028-000439-310846\ensemble_checkpoint.pkl"
+.\.venv\Scripts\python.exe "gbt_ensemble_experiments\predict_artifact.py" `
+  "gbt_ensemble_experiments\artifacts\20261028-000439-310846\ensemble_checkpoint.pkl"
 ```
 
 By default this writes both CSV files into a `reloaded_predictions` folder next
 to the checkpoint. To choose another destination:
 
 ```powershell
-.\.venv\Scripts\python.exe "codex_attempts\predict_artifact.py" `
-  "codex_attempts\artifacts\20261028-000439-310846\ensemble_checkpoint.pkl" `
-  --output-dir "codex_attempts\my_predictions"
+.\.venv\Scripts\python.exe "gbt_ensemble_experiments\predict_artifact.py" `
+  "gbt_ensemble_experiments\artifacts\20261028-000439-310846\ensemble_checkpoint.pkl" `
+  --output-dir "gbt_ensemble_experiments\my_predictions"
 ```
 
 ## Check the saved submissions
 
 ```powershell
-.\.venv\Scripts\python.exe -c "from check_submission import check_all; raise SystemExit(0 if check_all(r'codex_attempts\artifacts\20261028-000439-310846') else 1)"
+.\.venv\Scripts\python.exe -c "from check_submission import check_all; raise SystemExit(0 if check_all(r'gbt_ensemble_experiments\artifacts\20261028-000439-310846') else 1)"
 ```
 
 Both submissions in the current artifact have already passed this check, and a
@@ -100,14 +100,14 @@ Recompute the complete December 2025-May 2026 walk-forward validation. This is
 slow because each component is refitted before every validation month:
 
 ```powershell
-.\.venv\Scripts\python.exe "codex_attempts\validate.py"
+.\.venv\Scripts\python.exe "gbt_ensemble_experiments\validate.py"
 .\.venv\Scripts\python.exe run.py report
 ```
 
 To use the stored final validation predictions without refitting anything:
 
 ```powershell
-.\.venv\Scripts\python.exe "codex_attempts\validate.py" --reuse-results
+.\.venv\Scripts\python.exe "gbt_ensemble_experiments\validate.py" --reuse-results
 .\.venv\Scripts\python.exe run.py report
 ```
 

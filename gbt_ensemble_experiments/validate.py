@@ -2,11 +2,11 @@
 
 Full recomputation (slow):
 
-    python codex_attempts/validate.py
+    python gbt_ensemble_experiments/validate.py
 
 Export the already-computed validation predictions without retraining:
 
-    python codex_attempts/validate.py --reuse-results
+    python gbt_ensemble_experiments/validate.py --reuse-results
 
 After either command, the normal starter report works unchanged:
 
