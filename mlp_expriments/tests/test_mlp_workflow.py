@@ -5,7 +5,7 @@ import pandas as pd
 import pytest
 
 import data
-from mlp_attempts import exec, features, models
+from mlp_expriments import exec, features, models
 
 
 def make_listings(n, seed=0):
@@ -91,8 +91,8 @@ def test_resolves_two_explicit_test_checkpoints(tmp_path):
 
 def test_checkpoint_restores_config_and_predictions(tmp_path):
     torch = pytest.importorskip("torch")
-    from mlp_attempts.mlp import OffMarketMLP
-    from mlp_attempts.utils import TrainConfig
+    from mlp_expriments.mlp import OffMarketMLP
+    from mlp_expriments.utils import TrainConfig
 
     listings = make_listings(80)
     config = TrainConfig(
@@ -123,7 +123,7 @@ def test_checkpoint_restores_config_and_predictions(tmp_path):
 
 def test_log_price_encoding_round_trips_to_dollars():
     pytest.importorskip("torch")
-    from mlp_attempts.utils import decode_prices, encode_prices
+    from mlp_expriments.utils import decode_prices, encode_prices
 
     prices = np.array([400_000.0, 1_250_000.0, 3_000_000.0])
     encoded = encode_prices(prices, target_transform="log")
@@ -134,7 +134,7 @@ def test_log_price_encoding_round_trips_to_dollars():
 
 def test_preprocessor_supports_one_hot_and_id_encodings():
     torch = pytest.importorskip("torch")
-    from mlp_attempts.mlp import TabularPreprocessor
+    from mlp_expriments.mlp import TabularPreprocessor
 
     training = pd.DataFrame({
         "house_type_name": ["Condo", "Detached"],
@@ -156,7 +156,7 @@ def test_preprocessor_supports_one_hot_and_id_encodings():
 
 def test_embedding_network_trains_category_vectors():
     torch = pytest.importorskip("torch")
-    from mlp_attempts.mlp import EmbeddedPriceNetwork
+    from mlp_expriments.mlp import EmbeddedPriceNetwork
 
     specs = [
         {"column": "municipality", "input_index": 1, "num_embeddings": 3, "embedding_dim": 2},

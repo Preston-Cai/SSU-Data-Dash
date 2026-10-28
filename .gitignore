@@ -23,7 +23,7 @@ mlp_attempts/outputs/
 mlp_attempts/reports/
 mlp_attempts/figures/
 
-# Large fitted Codex models (keep source, docs, and compact results tracked)
-codex_attempts/artifacts/*
-!codex_attempts/artifacts/README.md
-codex_attempts/results/*.csv
+# Large fitted models (keep source, docs, and compact results tracked)
+gbt_ensemble_experiments/artifacts/*
+!gbt_ensemble_experiments/artifacts/README.md
+gbt_ensemble_experiments/results/*.csv

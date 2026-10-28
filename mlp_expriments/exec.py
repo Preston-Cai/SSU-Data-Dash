@@ -29,7 +29,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 import data
 import run as starter
-from mlp_attempts import models
+from mlp_expriments import models
 
 
 TRACKS = ["off_market", "list_aware"]
@@ -114,7 +114,7 @@ def apply_config(model, config: dict) -> None:
     if model.config.optimizer is not None:
         current_name = type(model.config.optimizer).__name__
         if current_name != model.config.optimizer_name:
-            from mlp_attempts.utils import make_optimizer
+            from mlp_expriments.utils import make_optimizer
 
             print(
                 f"Changing optimizer from {current_name} to "

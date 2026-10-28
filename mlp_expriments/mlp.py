@@ -12,8 +12,8 @@ import pandas as pd
 import torch
 import torch.nn as nn
 
-from mlp_attempts import features as mlp_features
-from mlp_attempts import utils
+from mlp_expriments import features as mlp_features
+from mlp_expriments import utils
 
 
 class TabularPreprocessor:
