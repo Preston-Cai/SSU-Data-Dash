@@ -27,3 +27,6 @@ mlp_attempts/figures/
 gbt_ensemble_experiments/artifacts/*
 !gbt_ensemble_experiments/artifacts/README.md
 gbt_ensemble_experiments/results/*.csv
+
+
+.codex
