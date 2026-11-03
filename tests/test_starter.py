@@ -135,6 +135,11 @@ def test_whole_pipeline_on_tiny_data(tmp_path, monkeypatch):
     data.hide_answers(later.iloc[20:], "list_aware").to_parquet(folder / "test_list_aware.parquet")
     monkeypatch.setenv("DATA_DIR", str(folder))
     monkeypatch.setattr(run, "ROOT", tmp_path)
+    # This exercises command I/O, not expensive GPU fitting or neural downloads.
+    monkeypatch.setenv("MODEL_PROFILE", "baseline")
+    monkeypatch.setattr(models, "make_model", lambda track:
+                        models.NearestSalesBaseline() if track == "off_market"
+                        else models.ListPriceBaseline())
 
     run.validate()
     run.report()

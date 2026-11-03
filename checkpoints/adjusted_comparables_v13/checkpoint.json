@@ -1,0 +1,49 @@
+{
+  "checkpoint": "adjusted_comparables_v13",
+  "status": "retained_success",
+  "created_utc": "2026-10-30T23:45:06.941721+00:00",
+  "source_run": "C:\\Users\\jiang\\Desktop\\SSU-Data-Dash\\outputs\\runs\\20261030T223210688362Z",
+  "model_profile": "comparables",
+  "scores": {
+    "list_aware": {
+      "track": "list_aware",
+      "model": "predicted_price",
+      "MdAPE": 3.8540372670807455,
+      "MAPE": 4.919576239502417,
+      "median_signed": -0.33638516179952394,
+      "homes": 10069
+    },
+    "off_market": {
+      "track": "off_market",
+      "model": "predicted_price",
+      "MdAPE": 7.38525875588082,
+      "MAPE": 9.885445622281734,
+      "median_signed": -0.017873510540789006,
+      "homes": 10069
+    }
+  },
+  "files": {
+    "check_submission.py": "f56160bddc46cd32efe0d48e937093c4955fb62ebe2b0fdf551eca80e6ae70a4",
+    "comparable_model.py": "9f0d7c3b9bfb563360fee538036203ecdb6c7671aa2f7d63c4e818ce4d53d5bb",
+    "data.py": "24c44bc8ae93e2bfe3c4948fd7442283f00f1a3c2179246e16ed0d1eb3b305ee",
+    "ensemble_comparison.csv": "43416a703acbfdb0a6c015d62ead37b6722a5e1a388c067cd964cd155cf84981",
+    "ensemble_runtime.py": "bd7f5d9d9a07a707c04677fc8927e81a722cbf81d9e62b650238e5f10ca5431a",
+    "experiment_cache.py": "61c38963b0f2cf8e8e3e4984d5c0d6ac7ad2dc4ee26f976806895089b2b07a59",
+    "EXPERIMENT_V13.md": "5b325b03fa380eb34b53dcfba538a8e8bead3d18c2c179a12381912d6d263168",
+    "features.py": "046b0e036e10b2e44f7fbb352702bc3e536a66a7a66729c2b77f888fd4cf43f2",
+    "feature_cache.py": "cbe349b9aef5dd2799b959e2e0b895df858e8893ac6e75cc207da50dfbb6e0d6",
+    "models.py": "8a1b23ea44001ca6c85ed2c0c4d9660277e1a5df10212dcc59a0e0d994251a98",
+    "MODEL_REPORT.md": "6b4ca2f6f1e4e4947481ae0090f527d8e987adb7902cac284194f14382711044",
+    "prepare_semantic_text.py": "bdd24263601fc8e78ecf76ba347e86ee1c75f7f3cd64a60b6caf458a18597efc",
+    "requirements-semantic.txt": "119cc7ba1e4997286139ab92fc716f621c389651305fb8136b65e9f01026d8c6",
+    "requirements.txt": "3f2439df92bb66cd773e568137110424d23eeaefacd0e02ea1f4959ae5181e83",
+    "results_table.tex": "353e8150076f049d315feba0f94c971684f45d8bcd3b9e742257417624a64e3a",
+    "run.json": "98a580c7260942fe92025ca6191295bdc8783d70addb3505a2bcf43ecdca76a3",
+    "run.py": "ed5a8d450fda7ba3d8b916937ac9f72cc2ca24055112a7d931726ae1708d24e5",
+    "semantic_text.py": "c168a1433b52d35f519ba93a23fa10c099d5c2623d6d61209eb6fbe59d07968b",
+    "validation_predictions.csv": "d36e4fcc86563b2c3434e62061f385d3eab22e43baf4e39b8d5090cd9b55b93b",
+    "validation_report.json": "970d1f9e6938372980d7a62c9ac578edecb50c1639af25496c0d226425b7503e",
+    "validation_report.md": "8700c6d51e5d3f32233d16122af6958e3639a372738ca1f0a4c6848a56c37e13",
+    "figures\\error_by_price_range.png": "92901ca751b1b29919eef57050d26668ea2b99529bf98e674cdc9c03dd47ad6d"
+  }
+}

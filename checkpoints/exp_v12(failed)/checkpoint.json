@@ -1,0 +1,46 @@
+{
+  "checkpoint": "exp_v12(failed)",
+  "status": "failed_experiment",
+  "source_run": "C:\\Users\\jiang\\Desktop\\SSU-Data-Dash\\outputs\\runs\\20261030T171853689787Z",
+  "model_profile": "semantic",
+  "working_profile_after_rollback": "ensemble",
+  "scores": {
+    "list_aware": {
+      "track": "list_aware",
+      "model": "predicted_price",
+      "MdAPE": 3.91427081296043,
+      "MAPE": 4.965483151566378,
+      "median_signed": -0.31317437058745456
+    },
+    "off_market": {
+      "track": "off_market",
+      "model": "predicted_price",
+      "MdAPE": 7.715905869010498,
+      "MAPE": 10.098431324590184,
+      "median_signed": 0.27554296506138165
+    }
+  },
+  "files": {
+    "check_submission.py": "f56160bddc46cd32efe0d48e937093c4955fb62ebe2b0fdf551eca80e6ae70a4",
+    "data.py": "24c44bc8ae93e2bfe3c4948fd7442283f00f1a3c2179246e16ed0d1eb3b305ee",
+    "ensemble_comparison.csv": "50fcf9427ce129edffbc62c8d9ae95af045120105df38c85eda1da839b256994",
+    "ensemble_runtime.py": "bd7f5d9d9a07a707c04677fc8927e81a722cbf81d9e62b650238e5f10ca5431a",
+    "experiment_cache.py": "61c38963b0f2cf8e8e3e4984d5c0d6ac7ad2dc4ee26f976806895089b2b07a59",
+    "features.py": "046b0e036e10b2e44f7fbb352702bc3e536a66a7a66729c2b77f888fd4cf43f2",
+    "feature_cache.py": "cbe349b9aef5dd2799b959e2e0b895df858e8893ac6e75cc207da50dfbb6e0d6",
+    "models.py": "815f37e42f462fa76fcc3908a57d9cd79786bee15a1faf86f25dd69a5ed97f13",
+    "MODEL_REPORT.md": "acfe1416bac64b817430c8569402d4c740213795b49a678db86087b8d55b3fb5",
+    "prepare_semantic_text.py": "bdd24263601fc8e78ecf76ba347e86ee1c75f7f3cd64a60b6caf458a18597efc",
+    "requirements-semantic.txt": "119cc7ba1e4997286139ab92fc716f621c389651305fb8136b65e9f01026d8c6",
+    "requirements.txt": "3f2439df92bb66cd773e568137110424d23eeaefacd0e02ea1f4959ae5181e83",
+    "results_table.tex": "2b0d13fbe13413a76b4b1d7e3ff06564117541d3134a46689b8b06e6570ad47a",
+    "run.json": "7d9dc381624417dd313805d115a82cab926787d26c05cdace9733256eedbf4a0",
+    "run.py": "3ecdac4828ff1f56c93112f7501ca1a613404d446793ee52cc17cb825776a946",
+    "semantic_text.py": "c168a1433b52d35f519ba93a23fa10c099d5c2623d6d61209eb6fbe59d07968b",
+    "text_correction_audit.json": "3c57db7ecb3241c875ddba9cd5571de7b7ed36278b79d6fb8e0451443c0687b3",
+    "validation_predictions.csv": "d48364a806f804d383267cd48c2e2a287b30b1c3827200b35cd13d4902d804e3",
+    "validation_report.json": "b6c73e3d0d62bfd41402935bed17f669b827ffc6593f0691f9a7c7f6068c2596",
+    "validation_report.md": "a294691f446cc614cdee44725abbdf43c345bf328179a9608863ba43040033c3",
+    "figures\\error_by_price_range.png": "e0eefd81ffc67fe4f2d82191be8d881d107ff3c992df2fd95feea1034ee5a11c"
+  }
+}

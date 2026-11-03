@@ -1,0 +1,15 @@
+{
+  "model_profile": "comparables",
+  "validation_months": [
+    "2025-12",
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05"
+  ],
+  "status": "complete",
+  "listings_digest": "98c24139ac608639c123d9e197ea2211f4a6f574f7bbca60a6ee1c4a9d7ce35a",
+  "base_signature": "d3acaf72fb4861edc309b577157b09852cfc98618936ba74474dfc9355c574e2",
+  "cache_disabled": false
+}

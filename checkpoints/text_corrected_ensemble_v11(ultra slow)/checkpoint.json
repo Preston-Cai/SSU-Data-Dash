@@ -1,0 +1,26 @@
+{
+  "checkpoint": "text_corrected_ensemble_v11(ultra slow)",
+  "source_run": "C:\\Users\\jiang\\Desktop\\SSU-Data-Dash\\outputs\\runs\\20261030T030130263932Z",
+  "selection": {
+    "off_market": "original predicted_price",
+    "list_aware": "rounded member_uncorrected_ensemble"
+  },
+  "validation": "Selected from existing same-run forecasts; no retraining",
+  "source_change": "make_model routes list_aware text_corrected profile to DiverseEnsemble",
+  "files": {
+    "check_submission.py": "f56160bddc46cd32efe0d48e937093c4955fb62ebe2b0fdf551eca80e6ae70a4",
+    "data.py": "24c44bc8ae93e2bfe3c4948fd7442283f00f1a3c2179246e16ed0d1eb3b305ee",
+    "ensemble_comparison.csv": "a12f4aa3d8358c39e90bceb50c78deae7b420da19b3504a921a99cb09a46517e",
+    "features.py": "046b0e036e10b2e44f7fbb352702bc3e536a66a7a66729c2b77f888fd4cf43f2",
+    "models.py": "6e54d67fe905165426403d443325a9420d6458a01e7e49f1bee05f4961bbb130",
+    "MODEL_REPORT.md": "363ee25e74d7764a03140980fcd711db49d9efb2d69acaaff4a4d8f4a7da1b30",
+    "original_run.json": "3a2edca736a799cb6cc57d0848cc5da1a48f17399a02fb0d4f8a0ee0bd5ab0bc",
+    "original_text_correction_audit.json": "ffcc82d4802efae8792e40af41d70b905b6c292e0cf4727e9fc75ebccfb5531e",
+    "original_validation_predictions.csv": "a77623e1b142afbe6b67113a24c077086f2e0d4864dddad66d45ef8442d9a8da",
+    "requirements.txt": "3f2439df92bb66cd773e568137110424d23eeaefacd0e02ea1f4959ae5181e83",
+    "run.py": "482f3e7eb933acf73439020ba00489271c8a84b1f808f7910abd5ae2c54beb81",
+    "validation_predictions.csv": "c5062ece921335f4005571f7025e7d3eb3a746731fd8ceec037a73e6dd6abd69",
+    "validation_report.json": "03051e35af6ce66f6bfae709f0d846e34f4862ee3d5fb7f52607d9542bed86ec",
+    "validation_report.md": "363ee25e74d7764a03140980fcd711db49d9efb2d69acaaff4a4d8f4a7da1b30"
+  }
+}

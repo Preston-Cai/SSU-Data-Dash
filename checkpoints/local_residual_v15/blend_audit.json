@@ -1,0 +1,320 @@
+[
+  {
+    "track": "off_market",
+    "outer_month": "2025-12",
+    "inner_folds": [
+      {
+        "month": "2025-06",
+        "train_max_sale": "2025-05-31 00:00:00",
+        "train_n": 127762,
+        "holdout_n": 2283,
+        "usable_n": 2271
+      },
+      {
+        "month": "2025-07",
+        "train_max_sale": "2025-06-30 00:00:00",
+        "train_n": 130045,
+        "holdout_n": 2068,
+        "usable_n": 2049
+      },
+      {
+        "month": "2025-08",
+        "train_max_sale": "2025-07-31 00:00:00",
+        "train_n": 132113,
+        "holdout_n": 1666,
+        "usable_n": 1653
+      },
+      {
+        "month": "2025-09",
+        "train_max_sale": "2025-08-31 00:00:00",
+        "train_n": 133779,
+        "holdout_n": 2035,
+        "usable_n": 2021
+      },
+      {
+        "month": "2025-10",
+        "train_max_sale": "2025-09-30 00:00:00",
+        "train_n": 135814,
+        "holdout_n": 2250,
+        "usable_n": 2237
+      },
+      {
+        "month": "2025-11",
+        "train_max_sale": "2025-10-31 00:00:00",
+        "train_n": 138064,
+        "holdout_n": 1867,
+        "usable_n": 1848
+      }
+    ]
+  },
+  {
+    "track": "list_aware",
+    "outer_month": "2025-12",
+    "inner_folds": []
+  },
+  {
+    "track": "off_market",
+    "outer_month": "2026-01",
+    "inner_folds": [
+      {
+        "month": "2025-07",
+        "train_max_sale": "2025-06-30 00:00:00",
+        "train_n": 130045,
+        "holdout_n": 2068,
+        "usable_n": 2049
+      },
+      {
+        "month": "2025-08",
+        "train_max_sale": "2025-07-31 00:00:00",
+        "train_n": 132113,
+        "holdout_n": 1666,
+        "usable_n": 1653
+      },
+      {
+        "month": "2025-09",
+        "train_max_sale": "2025-08-31 00:00:00",
+        "train_n": 133779,
+        "holdout_n": 2035,
+        "usable_n": 2021
+      },
+      {
+        "month": "2025-10",
+        "train_max_sale": "2025-09-30 00:00:00",
+        "train_n": 135814,
+        "holdout_n": 2250,
+        "usable_n": 2237
+      },
+      {
+        "month": "2025-11",
+        "train_max_sale": "2025-10-31 00:00:00",
+        "train_n": 138064,
+        "holdout_n": 1867,
+        "usable_n": 1848
+      },
+      {
+        "month": "2025-12",
+        "train_max_sale": "2025-11-30 00:00:00",
+        "train_n": 139931,
+        "holdout_n": 1238,
+        "usable_n": 1229
+      }
+    ]
+  },
+  {
+    "track": "list_aware",
+    "outer_month": "2026-01",
+    "inner_folds": []
+  },
+  {
+    "track": "off_market",
+    "outer_month": "2026-02",
+    "inner_folds": [
+      {
+        "month": "2025-08",
+        "train_max_sale": "2025-07-31 00:00:00",
+        "train_n": 132113,
+        "holdout_n": 1666,
+        "usable_n": 1653
+      },
+      {
+        "month": "2025-09",
+        "train_max_sale": "2025-08-31 00:00:00",
+        "train_n": 133779,
+        "holdout_n": 2035,
+        "usable_n": 2021
+      },
+      {
+        "month": "2025-10",
+        "train_max_sale": "2025-09-30 00:00:00",
+        "train_n": 135814,
+        "holdout_n": 2250,
+        "usable_n": 2237
+      },
+      {
+        "month": "2025-11",
+        "train_max_sale": "2025-10-31 00:00:00",
+        "train_n": 138064,
+        "holdout_n": 1867,
+        "usable_n": 1848
+      },
+      {
+        "month": "2025-12",
+        "train_max_sale": "2025-11-30 00:00:00",
+        "train_n": 139931,
+        "holdout_n": 1238,
+        "usable_n": 1229
+      },
+      {
+        "month": "2026-01",
+        "train_max_sale": "2025-12-31 00:00:00",
+        "train_n": 141169,
+        "holdout_n": 1058,
+        "usable_n": 1047
+      }
+    ]
+  },
+  {
+    "track": "list_aware",
+    "outer_month": "2026-02",
+    "inner_folds": []
+  },
+  {
+    "track": "off_market",
+    "outer_month": "2026-03",
+    "inner_folds": [
+      {
+        "month": "2025-09",
+        "train_max_sale": "2025-08-31 00:00:00",
+        "train_n": 133779,
+        "holdout_n": 2035,
+        "usable_n": 2021
+      },
+      {
+        "month": "2025-10",
+        "train_max_sale": "2025-09-30 00:00:00",
+        "train_n": 135814,
+        "holdout_n": 2250,
+        "usable_n": 2237
+      },
+      {
+        "month": "2025-11",
+        "train_max_sale": "2025-10-31 00:00:00",
+        "train_n": 138064,
+        "holdout_n": 1867,
+        "usable_n": 1848
+      },
+      {
+        "month": "2025-12",
+        "train_max_sale": "2025-11-30 00:00:00",
+        "train_n": 139931,
+        "holdout_n": 1238,
+        "usable_n": 1229
+      },
+      {
+        "month": "2026-01",
+        "train_max_sale": "2025-12-31 00:00:00",
+        "train_n": 141169,
+        "holdout_n": 1058,
+        "usable_n": 1047
+      },
+      {
+        "month": "2026-02",
+        "train_max_sale": "2026-01-31 00:00:00",
+        "train_n": 142227,
+        "holdout_n": 1442,
+        "usable_n": 1433
+      }
+    ]
+  },
+  {
+    "track": "list_aware",
+    "outer_month": "2026-03",
+    "inner_folds": []
+  },
+  {
+    "track": "off_market",
+    "outer_month": "2026-04",
+    "inner_folds": [
+      {
+        "month": "2025-10",
+        "train_max_sale": "2025-09-30 00:00:00",
+        "train_n": 135814,
+        "holdout_n": 2250,
+        "usable_n": 2237
+      },
+      {
+        "month": "2025-11",
+        "train_max_sale": "2025-10-31 00:00:00",
+        "train_n": 138064,
+        "holdout_n": 1867,
+        "usable_n": 1848
+      },
+      {
+        "month": "2025-12",
+        "train_max_sale": "2025-11-30 00:00:00",
+        "train_n": 139931,
+        "holdout_n": 1238,
+        "usable_n": 1229
+      },
+      {
+        "month": "2026-01",
+        "train_max_sale": "2025-12-31 00:00:00",
+        "train_n": 141169,
+        "holdout_n": 1058,
+        "usable_n": 1047
+      },
+      {
+        "month": "2026-02",
+        "train_max_sale": "2026-01-31 00:00:00",
+        "train_n": 142227,
+        "holdout_n": 1442,
+        "usable_n": 1433
+      },
+      {
+        "month": "2026-03",
+        "train_max_sale": "2026-02-28 00:00:00",
+        "train_n": 143669,
+        "holdout_n": 1816,
+        "usable_n": 1801
+      }
+    ]
+  },
+  {
+    "track": "list_aware",
+    "outer_month": "2026-04",
+    "inner_folds": []
+  },
+  {
+    "track": "off_market",
+    "outer_month": "2026-05",
+    "inner_folds": [
+      {
+        "month": "2025-11",
+        "train_max_sale": "2025-10-31 00:00:00",
+        "train_n": 138064,
+        "holdout_n": 1867,
+        "usable_n": 1848
+      },
+      {
+        "month": "2025-12",
+        "train_max_sale": "2025-11-30 00:00:00",
+        "train_n": 139931,
+        "holdout_n": 1238,
+        "usable_n": 1229
+      },
+      {
+        "month": "2026-01",
+        "train_max_sale": "2025-12-31 00:00:00",
+        "train_n": 141169,
+        "holdout_n": 1058,
+        "usable_n": 1047
+      },
+      {
+        "month": "2026-02",
+        "train_max_sale": "2026-01-31 00:00:00",
+        "train_n": 142227,
+        "holdout_n": 1442,
+        "usable_n": 1433
+      },
+      {
+        "month": "2026-03",
+        "train_max_sale": "2026-02-28 00:00:00",
+        "train_n": 143669,
+        "holdout_n": 1816,
+        "usable_n": 1801
+      },
+      {
+        "month": "2026-04",
+        "train_max_sale": "2026-03-31 00:00:00",
+        "train_n": 145485,
+        "holdout_n": 2224,
+        "usable_n": 2190
+      }
+    ]
+  },
+  {
+    "track": "list_aware",
+    "outer_month": "2026-05",
+    "inner_folds": []
+  }
+]

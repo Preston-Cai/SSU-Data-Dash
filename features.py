@@ -5,7 +5,7 @@ sold_price or date_sold) and returns a table of numbers, one row per home.
 FeatureModel in models.py uses them; switch it on in make_model() to try your features.
 
 Ideas to try:
-- lot size: lot_front * lot_depth (empty for condos, which is fine for tree models)
+- community, house style, municipality
 - garage, house_style, municipality
 - how pricey a community is: the median price per square foot of its past sales
   (work it out from the training sales only, never from the homes you predict)
@@ -31,12 +31,42 @@ def square_feet(house_area):
 def off_market_features(homes):
     """Features for homes with no list price."""
     X = pd.DataFrame(index=homes.index)
+    remarks = homes["remarks"].fillna("").str.lower()
     X["square_feet"] = square_feet(homes["house_area"])
     X["bedrooms"] = homes["bedrooms"]
     X["washrooms"] = homes["washrooms"]
     X["parking"] = homes["parking_total"]
     X["latitude"] = homes["latitude"]
     X["longitude"] = homes["longitude"]
+    X["lot_front"] = pd.to_numeric(homes["lot_front"], errors="coerce")
+    X["lot_depth"] = pd.to_numeric(homes["lot_depth"], errors="coerce")
+    # Keep community as a categorical feature. FeatureModel fits the encoder on
+    # the training rows and safely ignores unseen communities at prediction time.
+    X["community"] = homes["community"].astype("string").fillna("UNKNOWN")
+    # Municipality is a broader geographic level than community.  It lets the
+    # model share price patterns between nearby communities in the same former
+    # borough when an individual community has sparse evidence.
+    X["municipality"] = homes["municipality"].astype("string").fillna("UNKNOWN")
+    X["house_style"] = homes["house_style"].astype("string").fillna("UNKNOWN")
+    # Listing text describes condition and upgrades that the structured fields
+    # cannot capture. These are all available before a home sells.
+    X["remarks_word_count"] = remarks.str.split().str.len()
+    X["remarks_renovated"] = remarks.str.contains(
+        r"renovated|fully redone|updated|refreshed|newer|turnkey|move-in ready|quartz|custom",
+        regex=True,
+    ).astype(int)
+    X["remarks_needs_work"] = remarks.str.contains(
+        r"as-is|as is|needs work|needs updating|needs replacing|dated|original finishes|project|handy|renovator|unfinished",
+        regex=True,
+    ).astype(int)
+    X["remarks_outdoor"] = remarks.str.contains(
+        r"backyard|garden|ravine|balcony|terrace|yard",
+        regex=True,
+    ).astype(int)
+    X["remarks_transit"] = remarks.str.contains(
+        r"transit|subway|commut|steps to|walk to",
+        regex=True,
+    ).astype(int)
     # Months since January 2021, so the model can follow prices over time.
     X["months"] = (homes["date_listed"] - pd.Timestamp("2021-01-01")).dt.days / 30.44
     # One 0/1 column per property type.

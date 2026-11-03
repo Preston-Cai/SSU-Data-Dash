@@ -1,0 +1,56 @@
+{
+  "checkpoint": "local_residual_v15",
+  "status": "retained_success",
+  "created_utc": "2026-10-31T04:55:46.696441+00:00",
+  "source_run": "C:\\Users\\jiang\\Desktop\\SSU-Data-Dash\\outputs\\runs\\20261031T040350146623Z",
+  "model_profile": "local_residual",
+  "scores": {
+    "list_aware": {
+      "track": "list_aware",
+      "model": "predicted_price",
+      "MdAPE": 3.8430877192982438,
+      "MAPE": 4.903146910529376,
+      "median_signed": -0.30617754486262916,
+      "homes": 10069
+    },
+    "off_market": {
+      "track": "off_market",
+      "model": "predicted_price",
+      "MdAPE": 7.280305546330124,
+      "MAPE": 9.740426858743497,
+      "median_signed": -0.10070443496378312,
+      "homes": 10069
+    }
+  },
+  "files": {
+    "adaptive_comparables.py": "2577674d0998f3037905c7532aa783328d1f22a80481376328b90b47691183d9",
+    "blend_audit.json": "8751c841b7f32bc9db6c89d78401215d82ce052897ddb734ae7b8b425e067f54",
+    "check_submission.py": "f56160bddc46cd32efe0d48e937093c4955fb62ebe2b0fdf551eca80e6ae70a4",
+    "comparable_model.py": "9f0d7c3b9bfb563360fee538036203ecdb6c7671aa2f7d63c4e818ce4d53d5bb",
+    "data.py": "24c44bc8ae93e2bfe3c4948fd7442283f00f1a3c2179246e16ed0d1eb3b305ee",
+    "ensemble_comparison.csv": "984cf6d84639fb1e24aa8a61283e7428f2b36eb8ce2101f2b7011f8d6e9fff8e",
+    "ensemble_runtime.py": "bd7f5d9d9a07a707c04677fc8927e81a722cbf81d9e62b650238e5f10ca5431a",
+    "experiment_cache.py": "61c38963b0f2cf8e8e3e4984d5c0d6ac7ad2dc4ee26f976806895089b2b07a59",
+    "EXPERIMENT_V13.md": "5b325b03fa380eb34b53dcfba538a8e8bead3d18c2c179a12381912d6d263168",
+    "EXPERIMENT_V14.md": "a891d779e28c5c98f8df7c4778652903d0f2f8d61899658b13d5a452931c6d6f",
+    "EXPERIMENT_V15.md": "432ffcc0757839294add8dea3fd23867db3a25774fd9735ac57ef79952b847a1",
+    "features.py": "046b0e036e10b2e44f7fbb352702bc3e536a66a7a66729c2b77f888fd4cf43f2",
+    "feature_cache.py": "cbe349b9aef5dd2799b959e2e0b895df858e8893ac6e75cc207da50dfbb6e0d6",
+    "local_correction_audit.json": "9fe3773f067be00892dc7d2c090f43c0f24a061d004a8686a8bf1921961ace88",
+    "local_residual_model.py": "d08f18e15d3288d312d5c06e5a1a359e7da7abad7d6605343cb33b4f40b5980b",
+    "models.py": "91a03d1639e3d81b2a6a75486cfc5b923a9054279300dd08ca4251d89ba04870",
+    "MODEL_REPORT.md": "8ac4c26c48b3c70d990ca247846be5c551702bb694e99934111067ea9f276513",
+    "prepare_semantic_text.py": "bdd24263601fc8e78ecf76ba347e86ee1c75f7f3cd64a60b6caf458a18597efc",
+    "requirements-semantic.txt": "119cc7ba1e4997286139ab92fc716f621c389651305fb8136b65e9f01026d8c6",
+    "requirements.txt": "3f2439df92bb66cd773e568137110424d23eeaefacd0e02ea1f4959ae5181e83",
+    "results_table.tex": "dc330688fed034ec84ca8bac137de2a1ef92eb43075cba07a0d8b46a635b2705",
+    "run.json": "18407dce39f88634c846ae463baa6dc82628e7860bad0bb4fd31302b32b692b9",
+    "run.py": "a43593bfe06cbdd5579c4673abb4dddc4c69c9b4a425c83b63cc19dfec699f6f",
+    "semantic_text.py": "c168a1433b52d35f519ba93a23fa10c099d5c2623d6d61209eb6fbe59d07968b",
+    "specialist_comparables.py": "212d53a118ccc0c154ec81d47193de9691e3441cab9de948c5caa7b34e7c855c",
+    "validation_predictions.csv": "06271ba9953e88c1569309ef9125bfc616d09b083c629ad25e03ca3de7439303",
+    "validation_report.json": "a507645dd158eab721e2e6f2bd18e61f8ef666bf586c70125087c4d52f4291f5",
+    "validation_report.md": "aa0a4234278c6e581cf23c9023e4987a7e1f8a17edecd0b37c9b2caed0c84d6d",
+    "figures\\error_by_price_range.png": "97a6d35dd78d55f583056d3b669b4b44b6c4ecafce1b38411523381cdcca5923"
+  }
+}
