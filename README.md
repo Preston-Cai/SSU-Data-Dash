@@ -1,14 +1,17 @@
 # SSU Data Dash: predict Toronto home prices
 
-## Final submission model
+## Our Final submission model
 
-The final submission model is **not** the starter implementation in
-`models.py` and `features.py`.  It is the fitted ensemble in
-[`gbt_ensemble_experiments/`](gbt_ensemble_experiments/), documented in
-[`gbt_ensemble_experiments/FINAL_MODEL.md`](gbt_ensemble_experiments/FINAL_MODEL.md).
-For the exact submitted checkpoint, CSV row counts, validation reference, and
-verification commands, see [`SUBMISSION_README.md`](SUBMISSION_README.md).
-The final four-page submission report is [`report/report.pdf`](report/report.pdf).
+| Purpose | Link |
+|---|---|
+| Understand the final model and its source code | [`gbt_ensemble_experiments/README.md`](gbt_ensemble_experiments/README.md) |
+| Reproduce and verify the submitted CSVs | [`SUBMISSION_README.md`](SUBMISSION_README.md) |
+| Read the final four-page report | [`report/report.pdf`](report/report.pdf) |
+
+The final model is the ensemble implemented in `gbt_ensemble_experiments/`,
+not the starter implementation in `models.py` and `features.py`. All setup,
+prediction, and verification instructions needed to reproduce the submitted
+CSVs from a fresh clone are kept in `SUBMISSION_README.md`.
 
 `python run.py validate` and `python run.py predict` are wired to that final
 ensemble. Prediction writes the two official CSVs in `submissions/`. The
@@ -17,6 +20,7 @@ implementation. `run.py predict` reuses a matching fitted checkpoint when one
 exists and automatically trains the final ensemble when one does not, as
 detailed in `SUBMISSION_README.md`.
 
+## Instructions
 Start with the case handout, [`handout.md`](handout.md), and the judging rubric, [`rubric.md`](rubric.md).
 
 Two tracks:
@@ -84,10 +88,8 @@ SYN-0123456,815000
 
 `predict` writes both; run `check` before you hand in. Deadline: see the case email.
 
-The prepared final files are in `submissions/`. See
-[`SUBMISSION_README.md`](SUBMISSION_README.md) for the exact checkpoint,
-verification command, row counts, and conservative validation scores, and see
-[`report/report.pdf`](report/report.pdf) for the final report.
+The prepared final files are in `submissions/`. Follow
+[`SUBMISSION_README.md`](SUBMISSION_README.md) to reproduce and verify them.
 
 ## Rules
 

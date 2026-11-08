@@ -1,7 +1,11 @@
 # Final submission handoff
 
-The final four-page report is [`report/report.pdf`](report/report.pdf). It links
-to the presentation video and this GitHub repository.
+| Purpose | Link |
+|---|---|
+| Understand the final model and its source code | [`gbt_ensemble_experiments/README.md`](gbt_ensemble_experiments/README.md) |
+| Read the final four-page report | [`report/report.pdf`](report/report.pdf) |
+| Inspect the off-market submission | [`submissions/submission_off_market.csv`](submissions/submission_off_market.csv) |
+| Inspect the list-aware submission | [`submissions/submission_list_aware.csv`](submissions/submission_list_aware.csv) |
 
 The final submission files are ready in `submissions/`:
 
@@ -27,9 +31,11 @@ Its predictions are byte-for-byte identical to the originally selected
 `20261107-201132-343475` checkpoint.
 
 The fitted checkpoint is intentionally excluded from Git because it is a large
-generated artifact. The two submission CSVs themselves are tracked. `run.py
-predict` reuses the selected checkpoint when present and automatically trains
-the configured final model when no matching checkpoint exists.
+generated artifact. **A fresh clone therefore contains no fitted checkpoint.**
+Running `python run.py predict` detects that absence, trains the selected final
+model, saves a new local checkpoint, and writes both submission CSVs. If a
+matching local checkpoint already exists, the same command reuses it instead.
+The two submitted CSVs themselves are tracked in Git.
 
 ## Verify the files
 
@@ -53,11 +59,11 @@ submission_list_aware.csv: OK
 .\.venv\Scripts\python.exe run.py report
 ```
 
-The validation command runs the final GBT ensemble and is slow. To export the
+The validation command runs the final GBT ensemble and is **slow**. To export the
 already-computed walk-forward predictions without refitting, use
 `run.py validate --reuse-results`.
 
-## Reproduce predictions from a fresh clone
+## Reproduce the submission from a fresh clone
 
 Install the final-model dependencies, then generate and check the CSVs:
 
@@ -67,10 +73,11 @@ Install the final-model dependencies, then generate and check the CSVs:
 .\.venv\Scripts\python.exe run.py check
 ```
 
-`run.py predict` loads an existing checkpoint only if its validation metadata,
-weights, and calibration match the selected 3.98% MdAPE / 5.19% MAPE
-configuration. Otherwise, it trains that configuration, saves a timestamped
-checkpoint, and then generates the CSVs.
+Because checkpoints are not committed, `run.py predict` trains the selected
+model on its first run in a fresh clone. It loads an existing local checkpoint
+only when its validation metadata, weights, and calibration match the selected
+7.27% off-market / 3.98% list-aware MdAPE configuration. It then generates both
+CSVs.
 
 ## Regenerate CSVs from the existing checkpoint
 
@@ -93,5 +100,5 @@ The documented walk-forward benchmark uses December 2025 through May 2026:
 Each validation month used only sales before that month. The hidden submission
 period is June through September 2026.
 
-The report is `report/report.pdf`. Model instructions are in
-`gbt_ensemble_experiments/FINAL_MODEL.md`.
+The model overview is in `gbt_ensemble_experiments/README.md`; this document is
+the authoritative reproduction and submission-verification guide.

@@ -10,7 +10,7 @@ Choose the document that matches what you need:
 |---|---|
 | Understand the approach without much ML background | [`docs/HOW_WE_BUILT_THE_MODEL.md`](docs/HOW_WE_BUILT_THE_MODEL.md) |
 | Connect the important ideas to executable source code | [`docs/CODE_WALKTHROUGH.ipynb`](docs/WALKTHROUGH.ipynb) |
-| Run, retrain, or locate the selected model | [`FINAL_MODEL.md`](FINAL_MODEL.md) |
+| Reproduce the submitted CSVs and validation results | [`../SUBMISSION_README.md`](../SUBMISSION_README.md) |
 | Review every experiment and technical decision | [`docs/EXPERIMENT_REPORT.md`](docs/EXPERIMENT_REPORT.md) |
 
 ## Folder layout
@@ -31,32 +31,14 @@ gbt_ensemble_experiments/
 └── artifacts/                timestamped fitted models and submissions
 ```
 
-## Main commands
+## Reproducing the submitted CSVs and validation results
 
-Run commands from the repository root in PowerShell:
-
-```powershell
-# Train the final selected model and save a new timestamped checkpoint.
-.\.venv\Scripts\python.exe "gbt_ensemble_experiments\train_final.py"
-
-# Predict with the existing checkpoint without retraining.
-.\.venv\Scripts\python.exe "gbt_ensemble_experiments\predict_artifact.py" `
-  "gbt_ensemble_experiments\artifacts\20261107-201132-343475\ensemble_checkpoint.pkl"
-
-# Rebuild the six-month component predictions and final validation report (slow).
-.\.venv\Scripts\python.exe "gbt_ensemble_experiments\validate.py"
-
-# Then generate the normal starter report from those predictions.
-.\.venv\Scripts\python.exe run.py report
-```
-
-If validation has already been computed and you only need to restore the CSV
-expected by `run.py report`, use:
-
-```powershell
-.\.venv\Scripts\python.exe "gbt_ensemble_experiments\validate.py" --reuse-results
-.\.venv\Scripts\python.exe run.py report
-```
+Use the single authoritative guide at
+[`../SUBMISSION_README.md`](../SUBMISSION_README.md). Checkpoints are generated
+locally and are not present in a fresh clone; the documented `run.py predict`
+command trains the selected model when needed and writes both submission files.
+The same guide contains the commands for rebuilding the six-month walk-forward
+validation results and report outputs.
 
 The experiments obey the handout constraints: validation always predicts the
 future from the past, off-market never uses list price, and neither track uses
