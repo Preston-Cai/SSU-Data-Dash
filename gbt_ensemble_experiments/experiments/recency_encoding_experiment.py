@@ -41,6 +41,8 @@ class WeightedTargetEncoder:
         self.globals = {}
 
     def fit_transform(self, rows: pd.DataFrame) -> pd.DataFrame:
+        if rows.date_sold.isna().any():
+            raise ValueError("Target encoding requires date_sold for every fit row")
         keys = group_keys(rows)
         age_months = (self.cutoff - rows.date_sold).dt.days.to_numpy(float) / 30.44
         weights = np.exp2(-np.maximum(age_months, 0) / self.half_life)
@@ -51,19 +53,51 @@ class WeightedTargetEncoder:
             signals["log_sale_list"] = np.log(rows.sold_price.to_numpy(float) / rows.list_price.to_numpy(float))
         encoded = pd.DataFrame(index=rows.index)
         for signal_name, values in signals.items():
-            global_value = float(np.average(values, weights=weights))
-            self.globals[signal_name] = global_value
+            self.globals[signal_name] = float(np.average(values, weights=weights))
+
+            dated_values = pd.DataFrame({
+                "date_sold": rows.date_sold.to_numpy(),
+                "weighted_value": weights * values,
+                "weight": weights,
+            })
+            daily_global = dated_values.groupby("date_sold", sort=True)[
+                ["weighted_value", "weight"]
+            ].sum()
+            daily_global[["past_weighted_value", "past_weight"]] = daily_global[
+                ["weighted_value", "weight"]
+            ].cumsum().shift()
+            past_global_sum = rows.date_sold.map(daily_global.past_weighted_value)
+            past_global_weight = rows.date_sold.map(daily_global.past_weight)
+            past_global = past_global_sum / past_global_weight
+            # `weights` are relative to the prediction cutoff.  Scaling the
+            # prior by the current row's weight makes all historical weights
+            # equivalent to ages measured from that row's sale date.
+            prior_weight = self.prior * weights
+
             for group_name, key in keys.items():
                 temp = pd.DataFrame({
                     "key": key.to_numpy(),
                     "weighted_value": weights * values,
                     "weight": weights,
                 }, index=rows.index)
-                group_weighted_sum = temp.groupby("key", observed=True).weighted_value.transform("sum")
-                group_weight = temp.groupby("key", observed=True).weight.transform("sum")
+                dated = temp.assign(date_sold=rows.date_sold.to_numpy())
+                daily = dated.groupby(["key", "date_sold"], observed=True)[
+                    ["weighted_value", "weight"]
+                ].sum()
+                cumulative = daily.groupby(level="key", observed=True)[
+                    ["weighted_value", "weight"]
+                ].cumsum().groupby(level="key", observed=True).shift()
+                daily[["past_weighted_value", "past_weight"]] = cumulative
+                lookup = pd.MultiIndex.from_arrays([key.to_numpy(), rows.date_sold.to_numpy()])
+                group_weighted_sum = pd.Series(
+                    daily.past_weighted_value.reindex(lookup).to_numpy(), index=rows.index
+                ).fillna(0.0)
+                group_weight = pd.Series(
+                    daily.past_weight.reindex(lookup).to_numpy(), index=rows.index
+                ).fillna(0.0)
                 encoded[f"recent{self.half_life:g}_{signal_name}_{group_name}"] = (
-                    group_weighted_sum - weights * values + self.prior * global_value
-                ) / (group_weight - weights + self.prior)
+                    group_weighted_sum + prior_weight * past_global
+                ) / (group_weight + prior_weight)
                 self.tables[(signal_name, group_name)] = temp.groupby("key", observed=True)[
                     ["weighted_value", "weight"]
                 ].sum()

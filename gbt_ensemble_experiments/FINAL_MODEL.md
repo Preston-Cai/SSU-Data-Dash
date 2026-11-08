@@ -19,15 +19,15 @@ Validated performance over December 2025-May 2026:
 
 | Track | MAPE | MdAPE |
 |---|---:|---:|
-| off-market | 9.85% | 7.28% |
-| list-aware | 5.25% | 4.08% |
+| off-market | 9.81% | 7.33% |
+| list-aware | 5.26% | 4.07% |
 
 ## Current saved model
 
 The complete fitted model is:
 
 ```text
-gbt_ensemble_experiments/artifacts/20261028-000439-310846/ensemble_checkpoint.pkl
+gbt_ensemble_experiments/artifacts/20261107-191455-424122/ensemble_checkpoint.pkl
 ```
 
 This checkpoint contains the fitted feature builders, historical encoders,
@@ -73,7 +73,7 @@ Pass the exact checkpoint file, not its directory:
 
 ```powershell
 .\.venv\Scripts\python.exe "gbt_ensemble_experiments\predict_artifact.py" `
-  "gbt_ensemble_experiments\artifacts\20261028-000439-310846\ensemble_checkpoint.pkl"
+  "gbt_ensemble_experiments\artifacts\20261107-191455-424122\ensemble_checkpoint.pkl"
 ```
 
 By default this writes both CSV files into a `reloaded_predictions` folder next
@@ -81,14 +81,14 @@ to the checkpoint. To choose another destination:
 
 ```powershell
 .\.venv\Scripts\python.exe "gbt_ensemble_experiments\predict_artifact.py" `
-  "gbt_ensemble_experiments\artifacts\20261028-000439-310846\ensemble_checkpoint.pkl" `
+  "gbt_ensemble_experiments\artifacts\20261107-191455-424122\ensemble_checkpoint.pkl" `
   --output-dir "gbt_ensemble_experiments\my_predictions"
 ```
 
 ## Check the saved submissions
 
 ```powershell
-.\.venv\Scripts\python.exe -c "from check_submission import check_all; raise SystemExit(0 if check_all(r'gbt_ensemble_experiments\artifacts\20261028-000439-310846') else 1)"
+.\.venv\Scripts\python.exe -c "from check_submission import check_all; raise SystemExit(0 if check_all(r'gbt_ensemble_experiments\artifacts\20261107-191455-424122') else 1)"
 ```
 
 Both submissions in the current artifact have already passed this check, and a

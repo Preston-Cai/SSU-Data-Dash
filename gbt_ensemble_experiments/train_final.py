@@ -171,8 +171,8 @@ def main():
             "uses_after_sale_features": False,
         },
         "validation": {
-            "off_market": {"mape": 9.8465, "mdape": 7.2759},
-            "list_aware": {"mape": 5.2525, "mdape": 4.0810},
+            "off_market": {"mape": 9.81, "mdape": 7.33},
+            "list_aware": {"mape": 5.26, "mdape": 4.07},
             "weight_tuning_months": ["2025-09", "2025-10", "2025-11"],
             "official_months": ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"],
         },
