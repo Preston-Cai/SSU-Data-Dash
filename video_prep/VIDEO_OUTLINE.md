@@ -42,9 +42,9 @@ Then draw three model boxes feeding one prediction:
 - TF–IDF Ridge reads listing language and makes different mistakes.
 - A weighted geometric average combines them, followed by a small calibration.
 
-Mention the actual weights briefly: off-market is 15% LightGBM, 20% text, and
-65% XGBoost; list-aware is 35% ordinary-history LightGBM, 35% recency-aware
-LightGBM, and 30% text.
+Mention the actual weights briefly: off-market is 32% LightGBM, 19% text, and
+49% XGBoost; list-aware is 16% ordinary-history LightGBM, 49% recency-aware
+LightGBM, and 35% text.
 
 ## 1:25–2:35 — Why we built it this way
 
@@ -65,7 +65,7 @@ Main reasoning:
 Approaches tried but not promoted:
 
 - A custom PyTorch MLP reached 11.19% off-market MdAPE and 5.63% list-aware
-  MdAPE, worse than the corrected ensemble's 7.33% and 4.07%. Its inputs were
+  MdAPE, worse than the corrected ensemble's 7.27% and 4.06%. Its inputs were
   comparatively thin: basic size/room/parking/location fields, one-hot property
   type and style, municipality/community embeddings, lot dimensions, and list
   price for the list-aware track. It lacked remarks, engineered ratios and
@@ -103,8 +103,8 @@ Explain:
 
 **On screen:** Generated results table, not numbers typed into a slide.
 
-Say: “Across 10,069 later sales, off-market validation MdAPE was **7.33%** and
-list-aware MdAPE was **4.07%**. In plain language, half of predictions missed
+Say: “Across 10,069 later sales, off-market validation MdAPE was **7.27%** and
+list-aware MdAPE was **4.06%**. In plain language, half of predictions missed
 by less than those percentages.” Optionally give MAPE as a secondary tail-error
 measure, but keep MdAPE central because that is the competition metric.
 
@@ -116,16 +116,16 @@ state that errors exist.
 
 Fill these evidence statements after the corrected run:
 
-- Highest-error price band: top sold-price decile (13.69% off-market and 5.38%
+- Highest-error price band: top sold-price decile (13.42% off-market and 5.41%
   list-aware MdAPE).
-- Hardest sufficiently represented property type: semi-detached (9.79%
-  off-market and 5.87% list-aware MdAPE).
+- Hardest sufficiently represented property type: semi-detached (9.56%
+  off-market and 5.86% list-aware MdAPE).
 - Error for homes in sparse-history communities versus common communities:
-  7.84% versus 7.02% off-market and 4.27% versus 3.94% list-aware when comparing
+  7.74% versus 6.96% off-market and 4.27% versus 3.92% list-aware when comparing
   communities with 200--999 earlier sales against those with 1,000 or more.
   Do not headline the 50--199 band because it contains only eight homes.
-- Weakest validation month for both tracks: May 2026 (7.73% off-market and
-  4.37% list-aware MdAPE).
+- Weakest validation month for both tracks: May 2026 (7.63% off-market and
+  4.32% list-aware MdAPE).
 
 Explain likely causes only after showing the evidence:
 

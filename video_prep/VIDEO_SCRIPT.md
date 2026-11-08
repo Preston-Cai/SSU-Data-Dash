@@ -37,10 +37,10 @@ the visual do some of the work; do not read the headings aloud.
   errors from the trees.”
 - “We combine their prices with a weighted geometric average and a small
   calibration.”
-- “The off-market blend is fifteen percent LightGBM, twenty percent text, and
-  sixty-five percent XGBoost.”
-- “The list-aware blend is thirty-five percent ordinary-history LightGBM,
-  thirty-five percent recency-aware LightGBM, and thirty percent text.”
+- “The off-market blend is thirty-two percent LightGBM, nineteen percent text,
+  and forty-nine percent XGBoost.”
+- “The list-aware blend is sixteen percent ordinary-history LightGBM,
+  forty-nine percent recency-aware LightGBM, and thirty-five percent text.”
 
 ## Why — 1:25–2:40
 
@@ -95,33 +95,33 @@ the visual do some of the work; do not read the headings aloud.
 - “We selected blend weights and calibration on September through November,
   before the six reported validation months.”
 - “Across ten thousand and sixty-nine later sales, off-market MdAPE was seven
-  point three three percent.”
-- “List-aware MdAPE was four point zero seven percent.”
+  point two seven percent.”
+- “List-aware MdAPE was four point zero six percent.”
 - “That means half of the predictions missed by less than those percentages.”
 - “The corresponding mean errors were nine point eight one percent off-market
-  and five point two six percent list-aware.”
+  and five point two four percent list-aware.”
 
 ## Where it fails — 3:35–4:35
 
 - “The error chart shows that the most expensive ten percent of homes were the
   hardest price group.”
-- “Their median error was thirteen point six nine percent off-market and five
-  point three eight percent list-aware.”
+- “Their median error was thirteen point four two percent off-market and five
+  point four one percent list-aware.”
 - “Among property types with at least one hundred validation homes,
   semi-detached homes were hardest.”
-- “Their median errors were nine point seven nine percent off-market and five
-  point eight seven percent list-aware.”
+- “Their median errors were nine point five six percent off-market and five
+  point eight six percent list-aware.”
 - “The amount of local history also matters.”
 - “For communities with two hundred to nine hundred and ninety-nine earlier
-  sales, off-market MdAPE was seven point eight four percent.”
-- “For communities with at least one thousand earlier sales, it fell to seven
-  point zero two percent.”
+  sales, off-market MdAPE was seven point seven four percent.”
+- “For communities with at least one thousand earlier sales, it fell to six
+  point nine six percent.”
 - “The list-aware comparison was four point two seven versus three point nine
-  four percent.”
+  two percent.”
 - “There were only eight homes in the even sparser fifty-to-one-hundred-and-
   ninety-nine group, so we do not make a broad claim from that tiny sample.”
-- “May 2026 was the weakest month for both tracks, at seven point seven three
-  percent off-market and four point three seven percent list-aware.”
+- “May 2026 was the weakest month for both tracks, at seven point six three
+  percent off-market and four point three two percent list-aware.”
 - “Our interpretation is that unusual expensive homes and rare local groups
   have fewer truly comparable earlier sales.”
 - “May’s result also suggests market drift that recency weighting cannot fully

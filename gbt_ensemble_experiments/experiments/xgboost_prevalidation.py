@@ -1,4 +1,4 @@
-"""September-October predictions for the selected off-market XGBoost."""
+"""September-November predictions for the selected off-market XGBoost."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ RESULTS = HERE.parent / "results"
 def main():
     listings = data.load("listings")
     frames = []
-    for month in pd.period_range("2025-09", "2025-10", freq="M"):
+    for month in pd.period_range("2025-09", "2025-11", freq="M"):
         homes = listings[listings.date_sold.dt.to_period("M") == month].copy()
         started = time.perf_counter()
         prediction = fit_predict(listings, homes, month.start_time)

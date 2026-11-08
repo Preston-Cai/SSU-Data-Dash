@@ -44,9 +44,9 @@ external AVM and fields known only after sale.  No outside data were used.
 % One paragraph per track. Off-market has no list price; list-aware does. Explain how your two
 % models differ and why.
 The off-market prediction is a calibrated geometric blend of recency-aware
-LightGBM (15\%), word TF--IDF Ridge (20\%), and XGBoost (65\%).  The list-aware
-blend uses ordinary target-encoded LightGBM (35\%), recency-aware LightGBM
-(35\%), and word TF--IDF Ridge (30\%).  Trees capture nonlinear interactions
+LightGBM (32\%), word TF--IDF Ridge (19\%), and XGBoost (49\%).  The list-aware
+blend uses ordinary target-encoded LightGBM (16\%), recency-aware LightGBM
+(49\%), and word TF--IDF Ridge (35\%).  Trees capture nonlinear interactions
 among structure, location, and earlier comparable sales; Ridge contributes a
 different view through listing language.  We blend them because their errors
 are not identical, even when a component is weaker by itself.

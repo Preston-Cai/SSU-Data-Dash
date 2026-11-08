@@ -45,14 +45,14 @@ def main() -> None:
     )
     off["predicted_price"] = geometric_blend(
         [off.recent_prediction, off.text_prediction, off.xgboost_prediction],
-        [0.15, 0.20, 0.65],
-    ) * 0.9772745745864185
+        [0.32, 0.19, 0.49],
+    ) * 0.9805010910351815
 
     listed = base[base.track == "list_aware"].copy()
     listed["predicted_price"] = geometric_blend(
         [listed.regular_prediction, listed.recent_prediction, listed.text_prediction],
-        [0.35, 0.35, 0.30],
-    ) * 0.9865499704372777
+        [0.16, 0.49, 0.35],
+    ) * 0.9900921001323401
 
     final = pd.concat([off[base.columns], listed[base.columns]], ignore_index=True)
     final.to_csv(RESULTS / "final_walk_forward_predictions.csv", index=False)

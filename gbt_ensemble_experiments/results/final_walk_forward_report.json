@@ -20,202 +20,202 @@
         "n": 10069,
         "mape": 9.81,
         "mape_95ci": [
-          9.62,
+          9.61,
           10.0
         ],
-        "mdape": 7.33,
+        "mdape": 7.27,
         "mdape_95ci": [
-          7.13,
-          7.51
+          7.11,
+          7.44
         ],
-        "median_signed_error": -1.38
+        "median_signed_error": -1.06
       },
       "by_month": {
         "2025-12": {
           "n": 1238,
-          "mape": 9.66,
+          "mape": 9.73,
           "mape_95ci": [
-            9.14,
-            10.2
+            9.21,
+            10.28
           ],
-          "mdape": 7.02,
+          "mdape": 6.98,
           "mdape_95ci": [
-            6.54,
-            7.5
+            6.6,
+            7.45
           ],
-          "median_signed_error": 1.19
+          "median_signed_error": 1.51
         },
         "2026-01": {
           "n": 1058,
-          "mape": 9.55,
+          "mape": 9.59,
           "mape_95ci": [
-            9.02,
-            10.07
+            9.07,
+            10.13
           ],
-          "mdape": 7.3,
+          "mdape": 7.08,
           "mdape_95ci": [
-            6.49,
-            7.88
+            6.64,
+            7.74
           ],
-          "median_signed_error": -0.2
+          "median_signed_error": 0.15
         },
         "2026-02": {
           "n": 1442,
-          "mape": 9.6,
+          "mape": 9.58,
           "mape_95ci": [
-            9.13,
-            10.08
+            9.11,
+            10.06
           ],
-          "mdape": 7.1,
+          "mdape": 7.04,
           "mdape_95ci": [
-            6.61,
-            7.5
+            6.64,
+            7.48
           ],
-          "median_signed_error": -2.38
+          "median_signed_error": -2.01
         },
         "2026-03": {
           "n": 1816,
-          "mape": 9.75,
+          "mape": 9.7,
           "mape_95ci": [
-            9.28,
-            10.27
+            9.21,
+            10.22
           ],
           "mdape": 7.11,
           "mdape_95ci": [
-            6.76,
-            7.48
+            6.73,
+            7.45
           ],
-          "median_signed_error": -2.19
+          "median_signed_error": -1.9
         },
         "2026-04": {
           "n": 2224,
-          "mape": 9.78,
+          "mape": 9.76,
           "mape_95ci": [
-            9.42,
-            10.12
+            9.4,
+            10.11
           ],
-          "mdape": 7.62,
+          "mdape": 7.49,
           "mdape_95ci": [
-            7.12,
-            7.9
+            7.19,
+            7.78
           ],
-          "median_signed_error": -1.56
+          "median_signed_error": -1.24
         },
         "2026-05": {
           "n": 2291,
-          "mape": 10.23,
+          "mape": 10.24,
           "mape_95ci": [
             9.82,
             10.67
           ],
-          "mdape": 7.73,
+          "mdape": 7.63,
           "mdape_95ci": [
             7.21,
-            8.16
+            8.09
           ],
-          "median_signed_error": -1.97
+          "median_signed_error": -1.53
         }
       }
     },
     "list_aware": {
       "overall": {
         "n": 10069,
-        "mape": 5.26,
+        "mape": 5.24,
         "mape_95ci": [
-          5.18,
-          5.36
+          5.15,
+          5.34
         ],
-        "mdape": 4.07,
+        "mdape": 4.06,
         "mdape_95ci": [
-          3.98,
-          4.19
+          3.96,
+          4.17
         ],
-        "median_signed_error": -1.02
+        "median_signed_error": -0.72
       },
       "by_month": {
         "2025-12": {
           "n": 1238,
-          "mape": 4.87,
+          "mape": 4.86,
           "mape_95ci": [
             4.61,
-            5.13
+            5.12
           ],
-          "mdape": 3.82,
+          "mdape": 3.83,
           "mdape_95ci": [
-            3.63,
-            4.01
+            3.65,
+            3.98
           ],
-          "median_signed_error": -0.61
+          "median_signed_error": -0.33
         },
         "2026-01": {
           "n": 1058,
           "mape": 4.87,
           "mape_95ci": [
             4.61,
-            5.15
+            5.14
           ],
           "mdape": 3.82,
           "mdape_95ci": [
-            3.52,
-            4.09
+            3.59,
+            4.08
           ],
-          "median_signed_error": -0.61
+          "median_signed_error": -0.32
         },
         "2026-02": {
           "n": 1442,
-          "mape": 5.22,
+          "mape": 5.21,
           "mape_95ci": [
             5.0,
-            5.44
+            5.43
           ],
-          "mdape": 4.25,
+          "mdape": 4.31,
           "mdape_95ci": [
-            4.04,
-            4.51
+            4.06,
+            4.55
           ],
-          "median_signed_error": -1.19
+          "median_signed_error": -0.95
         },
         "2026-03": {
           "n": 1816,
-          "mape": 5.41,
+          "mape": 5.38,
           "mape_95ci": [
-            5.19,
-            5.64
+            5.15,
+            5.6
           ],
-          "mdape": 4.26,
+          "mdape": 4.14,
           "mdape_95ci": [
-            3.99,
-            4.44
+            3.95,
+            4.36
           ],
-          "median_signed_error": -1.26
+          "median_signed_error": -0.99
         },
         "2026-04": {
           "n": 2224,
-          "mape": 5.28,
+          "mape": 5.25,
           "mape_95ci": [
-            5.09,
-            5.5
+            5.05,
+            5.46
           ],
           "mdape": 3.9,
           "mdape_95ci": [
-            3.72,
-            4.11
+            3.75,
+            4.1
           ],
-          "median_signed_error": -1.18
+          "median_signed_error": -0.84
         },
         "2026-05": {
           "n": 2291,
-          "mape": 5.55,
+          "mape": 5.51,
           "mape_95ci": [
-            5.35,
-            5.74
+            5.31,
+            5.7
           ],
-          "mdape": 4.37,
+          "mdape": 4.32,
           "mdape_95ci": [
-            4.18,
-            4.57
+            4.13,
+            4.47
           ],
-          "median_signed_error": -1.07
+          "median_signed_error": -0.68
         }
       }
     }
