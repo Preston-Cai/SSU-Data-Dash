@@ -9,8 +9,9 @@ The final model is a separate ensemble for each competition track:
 
 - **Off-market:** 32% recency-aware LightGBM, 19% word TF-IDF Ridge, and 49%
   XGBoost, followed by calibration `0.9805010910351815`.
-- **List-aware:** 16% target-encoded LightGBM, 49% recency-aware LightGBM, and
-  35% word TF-IDF Ridge, followed by calibration `0.9900921001323401`.
+- **List-aware:** 6% target-encoded LightGBM, 25% recency-aware LightGBM, 13%
+  independent off-market value anchor, and 56% smoothed historical community
+  sold-to-list median, followed by calibration `0.9830723401924144`.
 
 The percentages are geometric-blend weights. Do not substitute one of the
 individual component files for the full ensemble.
@@ -20,7 +21,7 @@ Validated performance over December 2025-May 2026:
 | Track | MAPE | MdAPE |
 |---|---:|---:|
 | off-market | 9.81% | 7.27% |
-| list-aware | 5.24% | 4.06% |
+| list-aware | 5.19% | 3.98% |
 
 ## Current saved model
 

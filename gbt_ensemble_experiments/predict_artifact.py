@@ -37,14 +37,29 @@ def text_prediction(component: dict, homes: pd.DataFrame, track: str) -> np.ndar
     return np.exp(raw)
 
 
+def median_ratio_prediction(component: dict, homes: pd.DataFrame) -> np.ndarray:
+    """Apply a smoothed historical community sold-to-list median."""
+    visible = data.hide_answers(homes, "list_aware")
+    key = visible.community.fillna("__MISSING__").astype(str)
+    median = key.map(component["table"]["median"]).fillna(component["global_median"])
+    count = key.map(component["table"]["count"]).fillna(0.0)
+    smoothed = (
+        count * median + component["prior"] * component["global_median"]
+    ) / (count + component["prior"])
+    return visible.list_price.to_numpy(float) * np.exp(smoothed.to_numpy(float))
+
+
 def predict(checkpoint: dict, homes: pd.DataFrame, track: str) -> np.ndarray:
     track_model = checkpoint["tracks"][track]
     predictions = []
     for component in track_model["components"]:
-        if component["kind"] == "text":
-            predictions.append(text_prediction(component, homes, track))
+        component_track = component.get("prediction_track", track)
+        if component["kind"] == "median_ratio":
+            predictions.append(median_ratio_prediction(component, homes))
+        elif component["kind"] == "text":
+            predictions.append(text_prediction(component, homes, component_track))
         else:
-            predictions.append(tree_prediction(component, homes, track))
+            predictions.append(tree_prediction(component, homes, component_track))
     weights = np.asarray(track_model["weights"], dtype=float)
     blended = np.exp(sum(weight * np.log(values) for weight, values in zip(weights, predictions)))
     return blended * float(track_model["calibration"])

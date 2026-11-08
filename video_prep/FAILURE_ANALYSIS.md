@@ -5,11 +5,11 @@ after the past-only encoder fix. Values below are MdAPE.
 
 | Segment | Off-market | List-aware | Validation homes per track |
 |---|---:|---:|---:|
-| Highest sold-price decile | 13.42% | 5.41% | 1,007 |
-| Semi-detached | 9.56% | 5.86% | 1,034 |
-| Communities with 200--999 earlier sales | 7.74% | 4.27% | 4,364 |
-| Communities with at least 1,000 earlier sales | 6.96% | 3.92% | 5,697 |
-| May 2026 | 7.63% | 4.32% | 2,291 |
+| Highest sold-price decile | 13.42% | 5.32% | 1,007 |
+| Semi-detached | 9.56% | 5.84% | 1,034 |
+| Communities with 200--999 earlier sales | 7.74% | 4.20% | 4,364 |
+| Communities with at least 1,000 earlier sales | 6.96% | 3.81% | 5,697 |
+| May 2026 | 7.63% | 4.27% | 2,291 |
 
 The 50--199 earlier-sales community band had only eight validation homes. Its
 error should not be presented as a stable general finding.

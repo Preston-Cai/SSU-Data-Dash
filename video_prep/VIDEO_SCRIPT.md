@@ -39,8 +39,11 @@ the visual do some of the work; do not read the headings aloud.
   calibration.”
 - “The off-market blend is thirty-two percent LightGBM, nineteen percent text,
   and forty-nine percent XGBoost.”
-- “The list-aware blend is sixteen percent ordinary-history LightGBM,
-  forty-nine percent recency-aware LightGBM, and thirty-five percent text.”
+- “The list-aware blend is six percent ordinary-history LightGBM, twenty-five
+  percent recency-aware LightGBM, thirteen percent independent off-market value,
+  and fifty-six percent historical community sold-to-list median.”
+- “That specialized anchor helps us decide when an asking price disagrees with
+  the home's underlying value or with normal sale ratios in its community.”
 
 ## Why — 1:25–2:40
 
@@ -96,32 +99,32 @@ the visual do some of the work; do not read the headings aloud.
   before the six reported validation months.”
 - “Across ten thousand and sixty-nine later sales, off-market MdAPE was seven
   point two seven percent.”
-- “List-aware MdAPE was four point zero six percent.”
+- “List-aware MdAPE was three point nine eight percent.”
 - “That means half of the predictions missed by less than those percentages.”
 - “The corresponding mean errors were nine point eight one percent off-market
-  and five point two four percent list-aware.”
+  and five point one nine percent list-aware.”
 
 ## Where it fails — 3:35–4:35
 
 - “The error chart shows that the most expensive ten percent of homes were the
   hardest price group.”
 - “Their median error was thirteen point four two percent off-market and five
-  point four one percent list-aware.”
+  point three two percent list-aware.”
 - “Among property types with at least one hundred validation homes,
   semi-detached homes were hardest.”
 - “Their median errors were nine point five six percent off-market and five
-  point eight six percent list-aware.”
+  point eight four percent list-aware.”
 - “The amount of local history also matters.”
 - “For communities with two hundred to nine hundred and ninety-nine earlier
   sales, off-market MdAPE was seven point seven four percent.”
 - “For communities with at least one thousand earlier sales, it fell to six
   point nine six percent.”
-- “The list-aware comparison was four point two seven versus three point nine
-  two percent.”
+- “The list-aware comparison was four point two zero versus three point eight
+  one percent.”
 - “There were only eight homes in the even sparser fifty-to-one-hundred-and-
   ninety-nine group, so we do not make a broad claim from that tiny sample.”
 - “May 2026 was the weakest month for both tracks, at seven point six three
-  percent off-market and four point three two percent list-aware.”
+  percent off-market and four point two seven percent list-aware.”
 - “Our interpretation is that unusual expensive homes and rare local groups
   have fewer truly comparable earlier sales.”
 - “May’s result also suggests market drift that recency weighting cannot fully

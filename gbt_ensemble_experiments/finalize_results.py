@@ -8,6 +8,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+import data  # noqa: E402
+
 
 HERE = Path(__file__).resolve().parent
 RESULTS = HERE / "results"
@@ -36,6 +41,25 @@ def geometric_blend(parts: list[pd.Series], weights: list[float]) -> np.ndarray:
     return np.exp(sum(weight * np.log(part.to_numpy(float)) for part, weight in zip(parts, weights)))
 
 
+def median_ratio_predictions(listings: pd.DataFrame, homes: pd.DataFrame, month: str) -> np.ndarray:
+    cutoff = pd.Period(month).start_time
+    train = listings[
+        (listings.date_sold < cutoff)
+        & (listings.date_sold >= cutoff - pd.DateOffset(months=36))
+    ]
+    values = np.log(train.sold_price.to_numpy(float) / train.list_price.to_numpy(float))
+    global_median = float(np.median(values))
+    key = train.community.fillna("__MISSING__").astype(str)
+    table = pd.DataFrame({"key": key.to_numpy(), "value": values}).groupby("key").value.agg(
+        ["median", "count"]
+    )
+    home_key = homes.community.fillna("__MISSING__").astype(str)
+    median = home_key.map(table["median"]).fillna(global_median)
+    count = home_key.map(table["count"]).fillna(0.0)
+    smoothed = (count * median + 50.0 * global_median) / (count + 50.0)
+    return homes.list_price.to_numpy(float) * np.exp(smoothed.to_numpy(float))
+
+
 def main() -> None:
     base = pd.read_csv(RESULTS / "ensemble_walk_forward_predictions.csv")
     xgb = pd.read_csv(RESULTS / "xgboost_walk_forward_predictions.csv")
@@ -49,10 +73,26 @@ def main() -> None:
     ) * 0.9805010910351815
 
     listed = base[base.track == "list_aware"].copy()
+    off_anchor = off[["ml_num", "month", "recent_prediction", "text_prediction", "xgboost_prediction"]].copy()
+    off_anchor["off_anchor"] = geometric_blend(
+        [off_anchor.recent_prediction, off_anchor.text_prediction, off_anchor.xgboost_prediction],
+        [0.32, 0.19, 0.49],
+    )
+    listed = listed.merge(
+        off_anchor[["ml_num", "month", "off_anchor"]],
+        on=["ml_num", "month"],
+        validate="one_to_one",
+    )
+    listings = data.load("listings")
+    source = listings.set_index("ml_num")
+    listed["median_anchor"] = np.nan
+    for month, index in listed.groupby("month").groups.items():
+        homes = source.loc[listed.loc[index, "ml_num"]].reset_index()
+        listed.loc[index, "median_anchor"] = median_ratio_predictions(listings, homes, month)
     listed["predicted_price"] = geometric_blend(
-        [listed.regular_prediction, listed.recent_prediction, listed.text_prediction],
-        [0.16, 0.49, 0.35],
-    ) * 0.9900921001323401
+        [listed.regular_prediction, listed.recent_prediction, listed.off_anchor, listed.median_anchor],
+        [0.06, 0.25, 0.13, 0.56],
+    ) * 0.9830723401924144
 
     final = pd.concat([off[base.columns], listed[base.columns]], ignore_index=True)
     final.to_csv(RESULTS / "final_walk_forward_predictions.csv", index=False)

@@ -10,6 +10,9 @@ import pandas as pd
 EXPERIMENTS = Path(__file__).parents[1] / "gbt_ensemble_experiments" / "experiments"
 TARGETS = runpy.run_path(str(EXPERIMENTS / "target_encoding_experiment.py"), run_name="test_time_te")
 RECENCY = runpy.run_path(str(EXPERIMENTS / "recency_encoding_experiment.py"), run_name="test_time_recent")
+PREDICT = runpy.run_path(
+    str(EXPERIMENTS.parent / "predict_artifact.py"), run_name="test_median_ratio_predict"
+)
 
 
 def sample_rows() -> pd.DataFrame:
@@ -44,3 +47,15 @@ def test_recency_encoder_uses_only_strictly_earlier_dates():
     )
     encoded = encoder.fit_transform(sample_rows())
     assert_strict_history(encoded["recent4_log_price_community"])
+
+
+def test_median_ratio_component_uses_saved_history_only():
+    component = {
+        "kind": "median_ratio",
+        "table": pd.DataFrame({"median": [np.log(0.9)], "count": [10]}, index=["A"]),
+        "global_median": np.log(0.8),
+        "prior": 10.0,
+    }
+    predicted = PREDICT["median_ratio_prediction"](component, sample_rows().iloc[[0]])
+    expected_ratio = np.exp((10 * np.log(0.9) + 10 * np.log(0.8)) / 20)
+    assert np.allclose(predicted, [100.0 * expected_ratio])

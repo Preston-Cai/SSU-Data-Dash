@@ -125,6 +125,20 @@ def fit_text_component(train, track, alpha):
     return {"kind": "text", "builder": builder, "model": model}
 
 
+def fit_median_ratio_component(train, prior=50.0):
+    values = np.log(train.sold_price.to_numpy(float) / train.list_price.to_numpy(float))
+    key = train.community.fillna("__MISSING__").astype(str)
+    table = pd.DataFrame({"key": key.to_numpy(), "value": values}).groupby("key").value.agg(
+        ["median", "count"]
+    )
+    return {
+        "kind": "median_ratio",
+        "table": table,
+        "global_median": float(np.median(values)),
+        "prior": float(prior),
+    }
+
+
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -160,6 +174,12 @@ def main():
     )
     print("Training list-aware text Ridge...", flush=True)
     list_text = fit_text_component(list_train, "list_aware", alpha=50.0)
+    list_median = fit_median_ratio_component(list_train, prior=50.0)
+
+    # Reuse the independent off-market components as a property-value anchor
+    # when asking price disagrees with the underlying home characteristics.
+    for component in (off_recent, off_text, off_xgb):
+        component["prediction_track"] = "off_market"
 
     checkpoint = {
         "format_version": 1,
@@ -172,7 +192,7 @@ def main():
         },
         "validation": {
             "off_market": {"mape": 9.81, "mdape": 7.27},
-            "list_aware": {"mape": 5.24, "mdape": 4.06},
+            "list_aware": {"mape": 5.19, "mdape": 3.98},
             "weight_tuning_months": ["2025-09", "2025-10", "2025-11"],
             "official_months": ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"],
         },
@@ -183,9 +203,16 @@ def main():
                 "calibration": 0.9805010910351815,
             },
             "list_aware": {
-                "components": [list_regular, list_recent, list_text],
-                "weights": [0.16, 0.49, 0.35],
-                "calibration": 0.9900921001323401,
+                "components": [
+                    list_regular,
+                    list_recent,
+                    off_recent,
+                    off_text,
+                    off_xgb,
+                    list_median,
+                ],
+                "weights": [0.06, 0.25, 0.0416, 0.0247, 0.0637, 0.56],
+                "calibration": 0.9830723401924144,
             },
         },
     }

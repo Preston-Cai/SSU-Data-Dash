@@ -45,11 +45,14 @@ external AVM and fields known only after sale.  No outside data were used.
 % models differ and why.
 The off-market prediction is a calibrated geometric blend of recency-aware
 LightGBM (32\%), word TF--IDF Ridge (19\%), and XGBoost (49\%).  The list-aware
-blend uses ordinary target-encoded LightGBM (16\%), recency-aware LightGBM
-(49\%), and word TF--IDF Ridge (35\%).  Trees capture nonlinear interactions
+blend uses ordinary target-encoded LightGBM (6\%), recency-aware LightGBM
+(25\%), an independent off-market value anchor (13\%), and a smoothed historical
+community sold-to-list median (56\%).  Trees capture nonlinear interactions
 among structure, location, and earlier comparable sales; Ridge contributes a
 different view through listing language.  We blend them because their errors
-are not identical, even when a component is weaker by itself.
+are not identical, even when a component is weaker by itself.  The specialized
+list-aware anchor helps decide how much to trust an asking price by comparing it
+with both prior community sale ratios and a valuation that never saw list price.
 
 We also tested a dense PyTorch MLP with standardized numeric features,
 property/style indicators, and learned municipality/community embeddings.  It
