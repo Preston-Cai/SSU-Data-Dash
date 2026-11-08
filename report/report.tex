@@ -8,15 +8,15 @@
 \setlength{\parskip}{4pt}
 
 % Required: your team name and the full name of every team member.
-\title{SSU Data Dash 2026: \textit{Team name}}
-\author{\textit{Full name of every team member: Preston Cai, Lorance Jiang}}
+\title{SSU Data Dash 2026: \textit{Duo Sucker}}
+\author{\textit{Preston Cai, Lorance Jiang}}
 \date{}
 
 \begin{document}
 \maketitle
 
 \noindent\begin{tabular}{@{}ll}
-\textbf{Video (YouTube, unlisted is fine):} & \url{https://youtu.be/YOUR-VIDEO} \\
+\textbf{Video (YouTube):} & \url{https://youtu.be/YOUR-VIDEO} \\
 \textbf{Code and submission files (GitHub):} & \url{https://github.com/Preston-Cai/SSU-Data-Dash} \\
 \end{tabular}
 
@@ -39,6 +39,13 @@ price per square foot for community/type/style and geographic groups.  The
 list-aware track additionally uses list price and historical sold-to-list
 ratios; the off-market pipeline never receives list price.  We excluded the
 external AVM and fields known only after sale.  No outside data were used.
+
+We also supplied the trees with log area and log lot area, area-per-bedroom
+and bathrooms-per-bedroom ratios, garage/parking indicators, condominium
+flags, multi-resolution geographic cells, and community--property-type and
+community--style interactions.  Remarks became compact renovation, condition,
+luxury, transit, basement, and ``as-is'' indicators; the separate Ridge model
+kept the full word-level remarks rather than reducing them to flags.
 
 The targets were chosen to match the metric: off-market models predict
 $\log(\text{sold\_price})$, while list-aware models predict
@@ -99,6 +106,9 @@ construction.  Blend weights and calibration were fitted on
 September--November 2025.  The reported list-aware result is the conservative
 3.98\% score from the pre-specified walk-forward evaluation; later
 post-validation tuning is not used as evidence for the final result.
+Across the six official months, monthly MdAPE ranged from 7.05\% to 7.67\%
+off-market and from 3.87\% to 4.37\% list-aware; May was the weakest month for
+both tracks, consistent with market drift rather than a single anomalous row.
 
 \section{Results}
 \begin{table}[h]
@@ -126,12 +136,15 @@ the exploratory screening scripts.
 \includegraphics[width=0.85\linewidth]{error_by_price_range.png}
 \caption{Absolute percentage error by sold-price decile.}
 \end{figure}
-Errors rise in price bands and local groups with fewer comparable sales.  The
-off-market task is consistently harder because it lacks the seller's asking
-price.  Performance also varies by month, with later months showing sensitivity
-to market drift.  Text helps when remarks reveal renovation or condition, but
-synthetic or vague descriptions add little.  These patterns suggest that the
-next useful output is calibrated uncertainty by market segment, not just a
+Errors rise sharply in the expensive tail: the highest sold-price decile is
+about 13\% MdAPE off-market versus about 6--7\% in the cheapest deciles, while
+list-aware error rises to about 5\% from roughly 3\%.  Sparse communities and
+rare property combinations also fail more often because their historical
+encodings are pulled toward the market prior.  The off-market task is harder
+because it lacks the seller's asking price; the month-by-month range above also
+shows sensitivity to market drift.  Text helps when remarks reveal renovation
+or condition, but synthetic or vague descriptions add little.  These patterns
+suggest calibrated uncertainty by price and local-history support, not just a
 single point estimate.
 
 \section{Limitations}
