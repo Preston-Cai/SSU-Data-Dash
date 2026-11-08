@@ -3,7 +3,7 @@
 % Keep the report to 4 pages, not counting the outside-data table and the appendix.
 \documentclass[11pt]{article}
 \usepackage[margin=2.2cm]{geometry}
-\usepackage{graphicx,booktabs,hyperref}
+\usepackage{amsmath,graphicx,booktabs,hyperref}
 \graphicspath{{../figures/}}
 \setlength{\parskip}{4pt}
 
@@ -40,6 +40,17 @@ list-aware track additionally uses list price and historical sold-to-list
 ratios; the off-market pipeline never receives list price.  We excluded the
 external AVM and fields known only after sale.  No outside data were used.
 
+The targets were chosen to match the metric: off-market models predict
+$\log(\text{sold\_price})$, while list-aware models predict
+$\log(\text{sold\_price}/\text{list\_price})$.  This reduces the influence of
+the largest homes and makes the list-aware task a percentage adjustment rather
+than a second full-price estimate.  Local statistics are smoothed toward the
+overall market when a group is rare.  We retained both ordinary encodings and
+recency-weighted encodings because the former estimates a stable local level,
+while the latter can respond to market drift.  The final text training window
+is limited to the latest 36 months, and the strongest list-aware recency
+encoder uses a four-month half-life.
+
 \section{Models}
 % One paragraph per track. Off-market has no list price; list-aware does. Explain how your two
 % models differ and why.
@@ -61,6 +72,17 @@ reached 11.19\% off-market and 5.63\% list-aware MdAPE, so we did not promote it
 Its feature set lacked remarks, richer interactions, and the historical local
 price signals that most helped the tree ensemble; this particular architecture
 also fit mixed tabular structure less effectively than boosted trees.
+
+The screening experiments explain the final model choice.  On the November
+screen, leakage-safe local encodings reduced off-market MdAPE from 8.86\% to
+7.75\%, recency weighting reached about 7.69\%, and XGBoost reached 7.62\%.
+The components were retained because their errors were complementary.  In
+contrast, CatBoost reached 10.34\% off-market MdAPE, a direct comparable
+estimator reached 11.83\%, and a local-anchor residual model reached about
+7.85\%.  These alternatives were therefore rejected rather than included for
+complexity alone.  A weighted geometric blend was selected because the models
+operate on log-price targets; a multiplicative calibration then removes a
+remaining systematic bias.
 
 \section{Validation}
 % How you tested the models without using information from the future: which months you
@@ -91,6 +113,12 @@ while MAPE exposes larger errors.  We report both because a model can improve
 the median while leaving an unacceptable tail.  The rerun is the authoritative
 score: earlier experimental numbers used leave-one-out encodings that did not
 meet the handout's stricter ``earlier sales only'' rule and are not claimed here.
+
+The saved final artifact contains the fitted encoders, component models, blend
+weights, calibration, and submission files.  Reloading that checkpoint
+reproduces the predictions byte-for-byte, and both CSVs pass the starter
+submission checker.  This separates the reproducible submission model from
+the exploratory screening scripts.
 
 \section{Where the model fails}
 \begin{figure}[h]

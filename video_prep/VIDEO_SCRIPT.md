@@ -20,7 +20,7 @@ visible asking-price tag.
 
 Preston: Hi, I’m Preston.
 
-Lorance: And I’m Lorance. So, our project is basically a home-price estimator,
+Lorance: And I’m Lorance. Our project is basically a home-price estimator,
 but there are two versions of the question. One is: what is this home worth
 before it is listed? That is our off-market track. The other is: now that we can
 see the asking price, what will it probably sell for? That is list-aware.
@@ -80,15 +80,12 @@ the models on the same percentage scale.
 corrections”, “weighting”, and “stacking”. Cards leaving are labelled “not
 promoted”; the final GBT ensemble continues forward.
 
-Lorance: We also tried a PyTorch MLP. It sounded promising, but the result was
-eleven point one nine percent off-market MdAPE and five point six three percent
-list-aware. Its inputs were thinner, especially because it did not have the
-remarks and the strict local-history features.
+Preston: So that was our final model, but we also have tried different things that failed. For instance, a PyTorch MLP model sounded promising, but the result was eleven point one nine percent off-market MdAPE and five point six three percent list-aware. Its inputs were thinner, especially because it did not have the remarks and the strict local-history features.
 
-Preston: We tried heavier CatBoost workflows and direct comparable models too.
+Lorence: We tried heavier CatBoost workflows and direct comparable models too.
 Some were interesting, but they were either weaker in prevalidation or took a
-lot longer without a dependable gain. So the lesson was not “use the fanciest
-model.” It was more like: get the timing and the information right first.
+lot longer without a dependable gain. So the lesson was not to “use the fanciest
+model.” It was choosing the right model that interpret the features well in a reasonable duration.
 
 ## 2:55–3:45 — Walk-forward validation
 
@@ -100,19 +97,15 @@ Preston: For validation, we wanted to imitate the real future test. So, for
 December, we trained on sales before December. Then we moved the cutoff forward
 one month and did it again, all the way through May.
 
-Lorance: And this rule did not stop at the outer split. Inside the training
+Preston: And this rule did not stop at the outer split. Inside the training
 data, a home could only use sales from earlier dates. Homes sold on the same day
 were processed together, so they could not leak their prices to one another.
 
 **[VISUAL]** Score card: “10,069 homes per track”; large cards “OFF-MARKET
 MdAPE: 7.27%” and “LIST-AWARE MdAPE: 3.98%”; small line “MAPE: 9.81% / 5.19%”.
 
-Preston: Across ten thousand and sixty-nine homes, off-market MdAPE was seven
-point two seven percent, and list-aware was three point nine eight percent.
-
-Lorance: So, in plain language, half of the predictions missed by less than
-those percentages. The mean errors were nine point eight one and five point one
-nine percent.
+Lorence: Across ten thousand and sixty-nine homes, off-market MdAPE was seven
+point two seven percent, and list-aware was three point nine eight percent. The mean errors were nine point eight one and five point one nine percent.
 
 ## 3:45–4:35 — Where it fails
 
@@ -122,8 +115,7 @@ list-aware”; “semi-detached: 9.56%, 5.84%”; “sparse local history: about
 4.2%”; “May 2026: 7.63%, 4.27%”. Add “associations, not proven causes”.
 
 Preston: The model is not equally good for every home. The most expensive ten
-percent were the hardest. Semi-detached homes were also the hardest sufficiently
-represented property type.
+percent were the hardest. Semi-detached homes were also the hardest property type among the sufficiently represented types.
 
 Lorance: Homes in communities with fewer comparable sales did worse too, and
 May was the weakest month for both tracks.
@@ -132,17 +124,15 @@ Preston: That makes sense as a likely explanation: unusual homes and rare local
 groups give us fewer close examples. Off-market is harder because we lose the
 asking-price clue, and an older sale may not describe a changing market.
 
-Lorance: But those are interpretations of the pattern, not proof of the cause.
-
 ## 4:35–5:00 — Closing
 
 **[VISUAL]** Closing card with three takeaways: “local history”, “strict timing”,
 and “measure difficult segments”. Then show “Hidden test: June–September 2026”.
 
-Lorance: June through September is still hidden, so validation is evidence, not
-a guarantee.
+Lorance: June through September is still hidden, so validation is evidence but does not guarantee the true performance.
 
-Preston: If we continued, we would add uncertainty by segment and use nested
-time splits for future tuning. The main takeaway is simple: combine different
-models, use local history, and only use what was knowable on the prediction
-date. Thanks for watching.
+Preston: To sum it up, the biggest improvement came from time-aware local sales history, not from switching to a fancier or heavier model. The remaining errors concentrate in expensive homes and areas with fewer comparable sales. So we would use this model confidently for typical homes, but flag those segments for extra review.
+
+Lorence: That is our story developing this model. 
+
+Preston and Lorence: Thanks for watching!
