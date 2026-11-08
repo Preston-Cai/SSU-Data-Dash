@@ -67,7 +67,7 @@ Main reasoning:
 Approaches tried but not promoted:
 
 - A custom PyTorch MLP reached 11.19% off-market MdAPE and 5.63% list-aware
-  MdAPE, worse than the corrected ensemble's 7.27% and 3.95%. Its inputs were
+  MdAPE, worse than the corrected ensemble's 7.27% and 3.98%. Its inputs were
   comparatively thin: basic size/room/parking/location fields, one-hot property
   type and style, municipality/community embeddings, lot dimensions, and list
   price for the list-aware track. It lacked remarks, engineered ratios and
@@ -106,7 +106,7 @@ Explain:
 **On screen:** Generated results table, not numbers typed into a slide.
 
 Say: “Across 10,069 later sales, off-market validation MdAPE was **7.27%** and
-list-aware MdAPE was **3.95%**. In plain language, half of predictions missed
+list-aware MdAPE was **3.98%**. In plain language, half of predictions missed
 by less than those percentages.” Optionally give MAPE as a secondary tail-error
 measure, but keep MdAPE central because that is the competition metric.
 

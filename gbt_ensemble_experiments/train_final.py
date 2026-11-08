@@ -195,7 +195,7 @@ def main():
         },
         "validation": {
             "off_market": {"mape": 9.81, "mdape": 7.27},
-            "list_aware": {"mape": 5.15, "mdape": 3.95},
+            "list_aware": {"mape": 5.15, "mdape": 3.98},
             "weight_tuning_months": ["2025-09", "2025-10", "2025-11"],
             "official_months": ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"],
             "selection_note": (

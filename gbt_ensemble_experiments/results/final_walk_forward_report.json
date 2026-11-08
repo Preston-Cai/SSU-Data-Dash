@@ -13,7 +13,7 @@
       "2026-04",
       "2026-05"
     ],
-    "selection_note": "The community-plus-property-type refinement was selected after inspection of the official months; 3.95% is a post-validation development score, not a new untouched estimate."
+    "selection_note": "The reported list-aware result uses the conservative pre-specified walk-forward score of 3.98%; post-validation tuning is not used as evidence for the final result."
   },
   "tracks": {
     "off_market": {
@@ -126,7 +126,7 @@
           5.06,
           5.24
         ],
-        "mdape": 3.95,
+        "mdape": 3.98,
         "mdape_95ci": [
           3.86,
           4.05

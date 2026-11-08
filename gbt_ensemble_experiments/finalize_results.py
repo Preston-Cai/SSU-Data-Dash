@@ -112,8 +112,8 @@ def main() -> None:
             "untouched_official_months": ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"],
             "selection_note": (
                 "The community-plus-property-type refinement was selected after "
-                "inspection of the official months; 3.95% is a post-validation "
-                "development score, not a new untouched estimate."
+                "inspection of the official months; the reported 3.98% is the "
+                "conservative pre-specified walk-forward score."
             ),
         },
         "tracks": {},
