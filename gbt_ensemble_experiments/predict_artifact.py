@@ -38,9 +38,12 @@ def text_prediction(component: dict, homes: pd.DataFrame, track: str) -> np.ndar
 
 
 def median_ratio_prediction(component: dict, homes: pd.DataFrame) -> np.ndarray:
-    """Apply a smoothed historical community sold-to-list median."""
+    """Apply a smoothed historical group sold-to-list median."""
     visible = data.hide_answers(homes, "list_aware")
-    key = visible.community.fillna("__MISSING__").astype(str)
+    group_columns = component.get("group_columns", ["community"])
+    key = visible[group_columns[0]].fillna("__MISSING__").astype(str)
+    for column in group_columns[1:]:
+        key = key + "|" + visible[column].fillna("__MISSING__").astype(str)
     median = key.map(component["table"]["median"]).fillna(component["global_median"])
     count = key.map(component["table"]["count"]).fillna(0.0)
     smoothed = (

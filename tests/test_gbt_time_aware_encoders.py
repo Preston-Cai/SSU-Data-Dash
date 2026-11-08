@@ -55,7 +55,23 @@ def test_median_ratio_component_uses_saved_history_only():
         "table": pd.DataFrame({"median": [np.log(0.9)], "count": [10]}, index=["A"]),
         "global_median": np.log(0.8),
         "prior": 10.0,
+        "group_columns": ["community"],
     }
     predicted = PREDICT["median_ratio_prediction"](component, sample_rows().iloc[[0]])
     expected_ratio = np.exp((10 * np.log(0.9) + 10 * np.log(0.8)) / 20)
+    assert np.allclose(predicted, [100.0 * expected_ratio])
+
+
+def test_median_ratio_component_can_use_community_and_property_type():
+    component = {
+        "kind": "median_ratio",
+        "table": pd.DataFrame(
+            {"median": [np.log(0.95)], "count": [20]}, index=["A|Detached"]
+        ),
+        "global_median": np.log(0.8),
+        "prior": 10.0,
+        "group_columns": ["community", "house_type_name"],
+    }
+    predicted = PREDICT["median_ratio_prediction"](component, sample_rows().iloc[[0]])
+    expected_ratio = np.exp((20 * np.log(0.95) + 10 * np.log(0.8)) / 30)
     assert np.allclose(predicted, [100.0 * expected_ratio])

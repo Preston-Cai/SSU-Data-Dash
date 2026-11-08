@@ -1,143 +1,81 @@
-# Complete five-minute video script
+Opening — 0:00–0:20
 
-Each bullet is one natural spoken beat. Pause briefly between sections and let
-the visual do some of the work; do not read the headings aloud.
+Preston: We built a home-price estimator for two situations: off-market, where we cannot see the asking price, and list-aware, where we can.
 
-## Opening — 0:00–0:15
+Lorance: We explored different approaches, including fifteen versions of a CatBoost workflow, before choosing our final ensemble.
 
-- “We built a home-price estimator for two different situations.”
-- “In the off-market track, we estimate value without seeing the asking price.”
-- “In the list-aware track, the asking price is available.”
-- “I’ll show what we built, why we chose it, how we tested it on future sales,
-  and where it still makes mistakes.”
+## Final model and features — 0:20–1:25
 
-## What we built — 0:15–1:25
+Preston: Our final model combines home characteristics, location, listing remarks, and local sale history.
 
-- “We started with facts about the home: its size, lot, bedrooms, bathrooms,
-  parking, style, and property type.”
-- “We turned some of those into more useful relationships, like area per
-  bedroom and bathrooms per bedroom.”
-- “We also used municipality, community, latitude and longitude, and rounded
-  map cells, because nearby homes often share a price level.”
-- “Calendar features let the model represent seasonality and changes in the
-  market over time.”
-- “Listing remarks provide another kind of information, such as renovation,
-  condition, basement, transit, or luxury language.”
-- “Our most useful feature idea was local sale history.”
-- “For each home, we summarize what similar homes in its community, property
-  group, and geographic area had already sold for.”
-- “One version estimates the stable local price level, and another gives more
-  weight to recent sales.”
-- “For the list-aware track, we also learn how similar homes sold relative to
-  their asking prices.”
-- “Three models turn those features into a prediction.”
-- “LightGBM learns nonlinear patterns from the home and local-history features.”
-- “XGBoost gives us a second tree-based opinion for off-market homes.”
-- “A TF–IDF Ridge model reads the listing remarks and makes different kinds of
-  errors from the trees.”
-- “We combine their prices with a weighted geometric average and a small
-  calibration.”
-- “The off-market blend is thirty-two percent LightGBM, nineteen percent text,
-  and forty-nine percent XGBoost.”
-- “The list-aware blend is six percent ordinary-history LightGBM, twenty-five
-  percent recency-aware LightGBM, thirteen percent independent off-market value,
-  and fifty-six percent historical community sold-to-list median.”
-- “That specialized anchor helps us decide when an asking price disagrees with
-  the home's underlying value or with normal sale ratios in its community.”
+Preston: We use size, lot, rooms, parking, property type, and ratios such as bathrooms per bedroom.
 
-## Why — 1:25–2:40
+Preston: Community, coordinates, map cells, and calendar features capture local differences and market changes.
 
-- “Off-market models predict log sale price, because our metric cares about
-  percentage error rather than just error in dollars.”
-- “The list-aware models predict the percentage adjustment from asking price
-  to sale price, which is a more stable problem than rebuilding the full price
-  from scratch.”
-- “We kept local history because location labels alone do not tell us what
-  comparable homes were actually selling for.”
-- “We kept recency weighting because an old sale is usually less relevant than
-  a recent one.”
-- “We kept the text model even though it was not always strongest by itself,
-  because an ensemble improves when its members make different mistakes.”
-- “We also tested approaches that did not earn a place in the final model.”
-- “Our custom PyTorch neural network reached an eleven point one nine percent
-  off-market MdAPE and a five point six three percent list-aware MdAPE.”
-- “Its features were much thinner: basic size, rooms, parking and location,
-  plus property and style indicators, municipality and community embeddings,
-  lot dimensions, and list price only for the list-aware model.”
-- “It did not have listing text, the richer ratios and interactions, or the
-  historical local-price features that drove the tree models.”
-- “So it had to infer market value mostly from raw coordinates and category
-  identities.”
-- “A dense neural network also has a less helpful built-in structure than
-  boosted trees for this mixture of numeric and categorical table data.”
-- “That explains why this particular MLP was weaker; it does not mean every
-  possible neural network would fail.”
-- “CatBoost was slow and weak off-market.”
-- “A direct comparable-sales model sounded intuitive, but it was less accurate
-  than giving comparable-history features to boosted trees.”
-- “A local-anchor residual model, character-level text, longer text windows,
-  sample weighting, and stacking also failed to improve prevalidation enough
-  to justify their complexity.”
-- “The main gain came from better, properly timed information, not from picking
-  the fanciest model name.”
+Preston: Our key feature summarizes what similar nearby homes had already sold for, with a second version emphasizing recent sales.
 
-## How we validated it — 2:40–3:35
+Preston: LightGBM learns patterns in those features, XGBoost supplies another off-market prediction, and a TF–IDF Ridge model learns from listing remarks.
 
-- “We used walk-forward validation because a random split would let the model
-  learn from the future.”
-- “To predict December 2025, we trained only on sales before December.”
-- “Then we moved the cutoff forward, retrained everything, and predicted each
-  month through May 2026.”
-- “Every model and every neighbourhood table was rebuilt at each cutoff.”
-- “Validation sale prices never entered the features.”
-- “We enforced the same timing rule inside the training data.”
-- “Every training home’s local-price features use sales dated strictly earlier
-  than that home’s sale.”
-- “Homes sold on the same day are processed together, so they cannot reveal
-  their answers to one another.”
-- “We selected blend weights and calibration on September through November,
-  before the six reported validation months.”
-- “Across ten thousand and sixty-nine later sales, off-market MdAPE was seven
-  point two seven percent.”
-- “List-aware MdAPE was three point nine eight percent.”
-- “That means half of the predictions missed by less than those percentages.”
-- “The corresponding mean errors were nine point eight one percent off-market
-  and five point one nine percent list-aware.”
+Preston: We combine predictions geometrically, then apply a small calibration.
 
-## Where it fails — 3:35–4:35
+Preston: Off-market weights are thirty-two percent LightGBM, nineteen percent text, and forty-nine percent XGBoost.
 
-- “The error chart shows that the most expensive ten percent of homes were the
-  hardest price group.”
-- “Their median error was thirteen point four two percent off-market and five
-  point three two percent list-aware.”
-- “Among property types with at least one hundred validation homes,
-  semi-detached homes were hardest.”
-- “Their median errors were nine point five six percent off-market and five
-  point eight four percent list-aware.”
-- “The amount of local history also matters.”
-- “For communities with two hundred to nine hundred and ninety-nine earlier
-  sales, off-market MdAPE was seven point seven four percent.”
-- “For communities with at least one thousand earlier sales, it fell to six
-  point nine six percent.”
-- “The list-aware comparison was four point two zero versus three point eight
-  one percent.”
-- “There were only eight homes in the even sparser fifty-to-one-hundred-and-
-  ninety-nine group, so we do not make a broad claim from that tiny sample.”
-- “May 2026 was the weakest month for both tracks, at seven point six three
-  percent off-market and four point two seven percent list-aware.”
-- “Our interpretation is that unusual expensive homes and rare local groups
-  have fewer truly comparable earlier sales.”
-- “May’s result also suggests market drift that recency weighting cannot fully
-  remove.”
-- “These are explanations for measured patterns, not proof of their causes.”
+Preston: The list-aware blend uses six percent ordinary-history LightGBM, twenty-five percent recency-aware LightGBM, thirteen percent independent off-market value, and fifty-six percent historical community sold-to-list median.
 
-## Close — 4:35–5:00
+Preston: Off-market models predict log price; list-aware learners model the adjustment from asking price.
 
-- “June through September is the truly unseen hidden test, so our validation is
-  evidence, not a guarantee.”
-- “Rare groups remain uncertain, and this ensemble is more expensive to train
-  than one simple model.”
-- “Our next step would be segment-level uncertainty intervals and nested time
-  splits for any further tuning.”
-- “The main lesson was to combine different models with useful local history,
-  while enforcing what was actually knowable on every sale date.”
+## Experiments and the CatBoost decision — 1:25–2:50
+
+Lorance: We tried fifteen versions of the CatBoost approach before giving up on it for this submission because the training workflow became too heavy.
+
+Lorance: It grew into an ensemble with historical price features and text corrections.
+
+Lorance: By version eleven, we were testing corrections learned from earlier prediction errors; version twelve added frozen semantic representations of listing remarks.
+
+Lorance: That semantic experiment did not improve completed off-market validation.
+
+Lorance: Version thirteen learned adjustments between each home and up to eight earlier comparable sales.
+
+Lorance: Version fourteen separated houses and condos into specialists and learned when to trust their predictions.
+
+Lorance: Version fifteen added local error correction using recent errors from similar homes, with limits on correction size and fallback predictions.
+
+Lorance: The cost came from repeatedly training the underlying ensembles across historical monthly cutoffs, not just fitting one correction model.
+
+Lorance: Even after caching improvements, the documented cold version-twelve validation required one hundred fourteen CatBoost fits.
+
+Lorance: We stopped pursuing that complexity; version fifteen has no confirmed accuracy improvement in the experiment notes.
+
+Preston: We also tested a PyTorch neural network: its median percentage errors were eleven point one nine off-market and five point six three list-aware.
+
+Preston: It lacked text and richer historical features, so this comparison reflects both the model and its available information.
+
+## Validation and results — 2:50–4:00
+
+Preston: We tested future sales with walk-forward validation, training before December twenty twenty-five, predicting December, then moving forward monthly through May twenty twenty-six.
+
+Preston: Every model and neighbourhood table was rebuilt at each cutoff.
+
+Preston: Training features used only strictly earlier sales, and same-day homes could not reveal their prices to each other.
+
+Preston: Blend weights and calibration were selected on September through November, before the six reported months.
+
+Preston: Across ten thousand sixty-nine validation sales, median absolute percentage error was seven point two seven percent off-market and three point nine eight percent list-aware.
+
+Lorance: That means half the predictions missed by less than those percentages.
+
+Preston: Mean absolute percentage errors were nine point eight one and five point one nine percent, respectively.
+
+## Limitations and close — 4:00–4:50
+
+Preston: The most expensive ten percent of homes were hardest: median errors reached thirteen point four two percent off-market and five point three two percent list-aware.
+
+Preston: Communities with more historical sales performed better, while May was the weakest month for both tracks.
+
+Lorance: Limited comparables and market drift are plausible explanations, not proven causes.
+
+Lorance: June through September remains the unseen test, so validation is evidence, not a guarantee.
+
+Preston: Next, we would add uncertainty intervals and use nested time splits for further tuning.
+
+Lorance: Our lesson: useful historical information, honest timing, and manageable training matter more than adding complexity.

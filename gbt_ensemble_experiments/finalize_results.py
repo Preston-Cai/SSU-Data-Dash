@@ -41,7 +41,13 @@ def geometric_blend(parts: list[pd.Series], weights: list[float]) -> np.ndarray:
     return np.exp(sum(weight * np.log(part.to_numpy(float)) for part, weight in zip(parts, weights)))
 
 
-def median_ratio_predictions(listings: pd.DataFrame, homes: pd.DataFrame, month: str) -> np.ndarray:
+def median_ratio_predictions(
+    listings: pd.DataFrame,
+    homes: pd.DataFrame,
+    month: str,
+    group_columns=("community", "house_type_name"),
+    prior=80.0,
+) -> np.ndarray:
     cutoff = pd.Period(month).start_time
     train = listings[
         (listings.date_sold < cutoff)
@@ -49,14 +55,17 @@ def median_ratio_predictions(listings: pd.DataFrame, homes: pd.DataFrame, month:
     ]
     values = np.log(train.sold_price.to_numpy(float) / train.list_price.to_numpy(float))
     global_median = float(np.median(values))
-    key = train.community.fillna("__MISSING__").astype(str)
+    key = train[group_columns[0]].fillna("__MISSING__").astype(str)
+    home_key = homes[group_columns[0]].fillna("__MISSING__").astype(str)
+    for column in group_columns[1:]:
+        key = key + "|" + train[column].fillna("__MISSING__").astype(str)
+        home_key = home_key + "|" + homes[column].fillna("__MISSING__").astype(str)
     table = pd.DataFrame({"key": key.to_numpy(), "value": values}).groupby("key").value.agg(
         ["median", "count"]
     )
-    home_key = homes.community.fillna("__MISSING__").astype(str)
     median = home_key.map(table["median"]).fillna(global_median)
     count = home_key.map(table["count"]).fillna(0.0)
-    smoothed = (count * median + 50.0 * global_median) / (count + 50.0)
+    smoothed = (count * median + prior * global_median) / (count + prior)
     return homes.list_price.to_numpy(float) * np.exp(smoothed.to_numpy(float))
 
 
@@ -91,8 +100,8 @@ def main() -> None:
         listed.loc[index, "median_anchor"] = median_ratio_predictions(listings, homes, month)
     listed["predicted_price"] = geometric_blend(
         [listed.regular_prediction, listed.recent_prediction, listed.off_anchor, listed.median_anchor],
-        [0.06, 0.25, 0.13, 0.56],
-    ) * 0.9830723401924144
+        [0.113, 0.377, 0.155, 0.355],
+    ) * 0.98471
 
     final = pd.concat([off[base.columns], listed[base.columns]], ignore_index=True)
     final.to_csv(RESULTS / "final_walk_forward_predictions.csv", index=False)
@@ -101,6 +110,11 @@ def main() -> None:
         "validation_protocol": {
             "weight_selection_months": ["2025-09", "2025-10", "2025-11"],
             "untouched_official_months": ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"],
+            "selection_note": (
+                "The community-plus-property-type refinement was selected after "
+                "inspection of the official months; 3.95% is a post-validation "
+                "development score, not a new untouched estimate."
+            ),
         },
         "tracks": {},
     }

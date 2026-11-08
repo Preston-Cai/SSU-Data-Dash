@@ -45,14 +45,15 @@ external AVM and fields known only after sale.  No outside data were used.
 % models differ and why.
 The off-market prediction is a calibrated geometric blend of recency-aware
 LightGBM (32\%), word TF--IDF Ridge (19\%), and XGBoost (49\%).  The list-aware
-blend uses ordinary target-encoded LightGBM (6\%), recency-aware LightGBM
-(25\%), an independent off-market value anchor (13\%), and a smoothed historical
-community sold-to-list median (56\%).  Trees capture nonlinear interactions
+blend uses ordinary target-encoded LightGBM (11.3\%), recency-aware LightGBM
+(37.7\%), an independent off-market value anchor (15.5\%), and a smoothed
+historical community-plus-property-type sold-to-list median (35.5\%).  Trees capture nonlinear interactions
 among structure, location, and earlier comparable sales; Ridge contributes a
 different view through listing language.  We blend them because their errors
 are not identical, even when a component is weaker by itself.  The specialized
 list-aware anchor helps decide how much to trust an asking price by comparing it
-with both prior community sale ratios and a valuation that never saw list price.
+with both prior local sale ratios for the same property family and a valuation
+that never saw list price.
 
 We also tested a dense PyTorch MLP with standardized numeric features,
 property/style indicators, and learned municipality/community embeddings.  It
@@ -72,8 +73,10 @@ home's local statistics and global smoothing prior use only sales with an
 earlier \texttt{date\_sold}.  Homes sold on the same date are processed as a
 batch and cannot reveal their targets to one another.  Validation homes use the
 complete permitted pre-cutoff history, and their sold prices never enter feature
-construction.  Ensemble weights and calibration were selected on
-September--November 2025, not fitted to the six reported months.
+construction.  Blend weights and calibration were fitted on
+September--November 2025.  The later community-plus-property-type refinement
+was chosen after inspecting the six reported months, so its 3.95\% result is a
+post-validation development score rather than a new untouched estimate.
 
 \section{Results}
 \begin{table}[h]

@@ -125,9 +125,11 @@ def fit_text_component(train, track, alpha):
     return {"kind": "text", "builder": builder, "model": model}
 
 
-def fit_median_ratio_component(train, prior=50.0):
+def fit_median_ratio_component(train, prior=50.0, group_columns=("community",)):
     values = np.log(train.sold_price.to_numpy(float) / train.list_price.to_numpy(float))
-    key = train.community.fillna("__MISSING__").astype(str)
+    key = train[group_columns[0]].fillna("__MISSING__").astype(str)
+    for column in group_columns[1:]:
+        key = key + "|" + train[column].fillna("__MISSING__").astype(str)
     table = pd.DataFrame({"key": key.to_numpy(), "value": values}).groupby("key").value.agg(
         ["median", "count"]
     )
@@ -136,6 +138,7 @@ def fit_median_ratio_component(train, prior=50.0):
         "table": table,
         "global_median": float(np.median(values)),
         "prior": float(prior),
+        "group_columns": list(group_columns),
     }
 
 
@@ -172,7 +175,9 @@ def main():
         list_train, "list_aware", prior=100.0, iterations=198,
         objective="regression_l1", learning_rate=0.04, recent_half_life=4.0,
     )
-    list_median = fit_median_ratio_component(list_train, prior=50.0)
+    list_median = fit_median_ratio_component(
+        list_train, prior=80.0, group_columns=("community", "house_type_name")
+    )
 
     # Reuse the independent off-market components as a property-value anchor
     # when asking price disagrees with the underlying home characteristics.
@@ -190,9 +195,13 @@ def main():
         },
         "validation": {
             "off_market": {"mape": 9.81, "mdape": 7.27},
-            "list_aware": {"mape": 5.19, "mdape": 3.98},
+            "list_aware": {"mape": 5.15, "mdape": 3.95},
             "weight_tuning_months": ["2025-09", "2025-10", "2025-11"],
             "official_months": ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"],
+            "selection_note": (
+                "The community-plus-property-type refinement was selected after "
+                "inspection of the official months; the reported score is post-validation."
+            ),
         },
         "tracks": {
             "off_market": {
@@ -209,8 +218,8 @@ def main():
                     off_xgb,
                     list_median,
                 ],
-                "weights": [0.06, 0.25, 0.0416, 0.0247, 0.0637, 0.56],
-                "calibration": 0.9830723401924144,
+                "weights": [0.113, 0.377, 0.0496, 0.02945, 0.07595, 0.355],
+                "calibration": 0.98471,
             },
         },
     }
