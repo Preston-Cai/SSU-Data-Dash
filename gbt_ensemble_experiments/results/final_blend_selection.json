@@ -6,13 +6,13 @@
       "xgboost_prediction"
     ],
     "weights": [
-      0.15,
-      0.2,
-      0.65
+      0.32,
+      0.19,
+      0.49
     ],
-    "calibration": 0.9772745745864185,
-    "prevalidation_mdape": 7.109192470183696,
-    "prevalidation_mape": 9.76120523556915,
+    "calibration": 0.9805010910351815,
+    "prevalidation_mdape": 7.167784052090877,
+    "prevalidation_mape": 9.793624361042225,
     "rows": 6152,
     "months": [
       "2025-09",
@@ -27,13 +27,13 @@
       "text_prediction"
     ],
     "weights": [
-      0.35,
-      0.35,
-      0.3
+      0.16,
+      0.49,
+      0.35
     ],
-    "calibration": 0.9865499704372777,
-    "prevalidation_mdape": 3.8259033877097615,
-    "prevalidation_mape": 4.929372275038993,
+    "calibration": 0.9900921001323401,
+    "prevalidation_mdape": 3.8505987452168897,
+    "prevalidation_mape": 4.91787417886305,
     "rows": 6152,
     "months": [
       "2025-09",

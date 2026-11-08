@@ -48,7 +48,12 @@ def group_keys(rows: pd.DataFrame) -> dict[str, pd.Series]:
 
 
 class TargetEncoder:
-    """Smoothed leave-one-out encodings for fit rows, full-history for future rows."""
+    """Past-only encodings for fit rows, full-history for future rows.
+
+    Rows sold on the same date are treated as one batch, so they cannot reveal
+    one another's targets.  This is stricter than leave-one-out encoding: a fit
+    row can use only targets whose sale date is strictly earlier than its own.
+    """
 
     def __init__(self, track: str, prior: float):
         self.track = track
@@ -57,6 +62,8 @@ class TargetEncoder:
         self.globals = {}
 
     def fit_transform(self, rows: pd.DataFrame) -> pd.DataFrame:
+        if rows.date_sold.isna().any():
+            raise ValueError("Target encoding requires date_sold for every fit row")
         keys = group_keys(rows)
         sold = np.log(rows.sold_price.to_numpy(float))
         area = square_feet(rows.house_area).clip(lower=100).to_numpy(float)
@@ -66,15 +73,31 @@ class TargetEncoder:
         encoded = pd.DataFrame(index=rows.index)
         for signal_name, values in signals.items():
             values_series = pd.Series(values, index=rows.index)
-            global_value = float(values_series.mean())
-            self.globals[signal_name] = global_value
+            self.globals[signal_name] = float(values_series.mean())
+
+            dated_values = pd.DataFrame({
+                "date_sold": rows.date_sold.to_numpy(),
+                "value": values,
+            })
+            daily_global = dated_values.groupby("date_sold", sort=True).value.agg(["sum", "count"])
+            daily_global[["past_sum", "past_count"]] = daily_global[["sum", "count"]].cumsum().shift()
+            past_global_sum = rows.date_sold.map(daily_global.past_sum)
+            past_global_count = rows.date_sold.map(daily_global.past_count)
+            past_global = past_global_sum / past_global_count
+
             for group_name, key in keys.items():
                 temp = pd.DataFrame({"key": key.to_numpy(), "value": values}, index=rows.index)
-                sums = temp.groupby("key", observed=True).value.transform("sum")
-                counts = temp.groupby("key", observed=True).value.transform("count")
+                dated = temp.assign(date_sold=rows.date_sold.to_numpy())
+                daily = dated.groupby(["key", "date_sold"], observed=True).value.agg(["sum", "count"])
+                daily[["past_sum", "past_count"]] = daily.groupby(level="key", observed=True)[
+                    ["sum", "count"]
+                ].cumsum().groupby(level="key", observed=True).shift()
+                lookup = pd.MultiIndex.from_arrays([key.to_numpy(), rows.date_sold.to_numpy()])
+                sums = pd.Series(daily.past_sum.reindex(lookup).to_numpy(), index=rows.index).fillna(0.0)
+                counts = pd.Series(daily.past_count.reindex(lookup).to_numpy(), index=rows.index).fillna(0.0)
                 encoded[f"te_{signal_name}_{group_name}"] = (
-                    sums - values_series + self.prior * global_value
-                ) / (counts - 1 + self.prior)
+                    sums + self.prior * past_global
+                ) / (counts + self.prior)
                 table = temp.groupby("key", observed=True).value.agg(["sum", "count"])
                 self.tables[(signal_name, group_name)] = table
         return encoded

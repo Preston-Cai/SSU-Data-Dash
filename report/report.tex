@@ -21,22 +21,56 @@
 \end{tabular}
 
 \section*{Summary}
-% Three or four sentences: your approach, your validation result, and your main finding.
-\textit{What you did, how well it worked when tested on later sales, and the one thing you learned.}
+We built separate ensembles for off-market and list-aware valuation.  Each combines
+boosted trees using property and strictly historical local-sale features with a
+TF--IDF text model that reads listing remarks.  In six-month walk-forward
+validation (December 2025--May 2026), the current rerun produced the results in
+Table~1.  Our main finding is that carefully timed local-sale history matters
+more than changing tree libraries: a neighbourhood feature is useful only when
+it is constructed from sales already known on the prediction date.
 
 \section{Data and features}
 % Which columns you used, what you built from them, and anything you dropped and why.
-\textit{Your features for each track.}
+We used physical attributes (area midpoints, lot size, bedrooms, bathrooms,
+parking, style, and property type), municipality and community, rounded
+latitude/longitude cells, calendar and seasonal variables, and indicators
+extracted from remarks.  Local-history features summarize log price and log
+price per square foot for community/type/style and geographic groups.  The
+list-aware track additionally uses list price and historical sold-to-list
+ratios; the off-market pipeline never receives list price.  We excluded the
+external AVM and fields known only after sale.  No outside data were used.
 
 \section{Models}
 % One paragraph per track. Off-market has no list price; list-aware does. Explain how your two
 % models differ and why.
-\textit{Your off-market model and your list-aware model.}
+The off-market prediction is a calibrated geometric blend of recency-aware
+LightGBM (32\%), word TF--IDF Ridge (19\%), and XGBoost (49\%).  The list-aware
+blend uses ordinary target-encoded LightGBM (16\%), recency-aware LightGBM
+(49\%), and word TF--IDF Ridge (35\%).  Trees capture nonlinear interactions
+among structure, location, and earlier comparable sales; Ridge contributes a
+different view through listing language.  We blend them because their errors
+are not identical, even when a component is weaker by itself.
+
+We also tested a dense PyTorch MLP with standardized numeric features,
+property/style indicators, and learned municipality/community embeddings.  It
+reached 11.19\% off-market and 5.63\% list-aware MdAPE, so we did not promote it.
+Its feature set lacked remarks, richer interactions, and the historical local
+price signals that most helped the tree ensemble; this particular architecture
+also fit mixed tabular structure less effectively than boosted trees.
 
 \section{Validation}
 % How you tested the models without using information from the future: which months you
 % trained on, which you predicted, and how you made sure nothing leaked.
-\textit{How you validated.}
+We used walk-forward validation rather than a random split.  For each month from
+December 2025 through May 2026, every component was rebuilt using only sales
+strictly before that month's cutoff, then evaluated on that month.  Target
+encodings are also chronological \emph{within} the training set: a training
+home's local statistics and global smoothing prior use only sales with an
+earlier \texttt{date\_sold}.  Homes sold on the same date are processed as a
+batch and cannot reveal their targets to one another.  Validation homes use the
+complete permitted pre-cutoff history, and their sold prices never enter feature
+construction.  Ensemble weights and calibration were selected on
+September--November 2025, not fitted to the six reported months.
 
 \section{Results}
 \begin{table}[h]
@@ -45,8 +79,12 @@
 \caption{Walk-forward validation on the listings. MdAPE: median absolute percentage error.
 MAPE: mean absolute percentage error. Brackets: bootstrap 95\% interval.}
 \end{table}
-% Describe the numbers in words. What improved over the baselines, and by how much?
-\textit{What the table shows.}
+The table is regenerated directly from row-level predictions by
+\texttt{python run.py report}.  MdAPE describes the typical percentage miss,
+while MAPE exposes larger errors.  We report both because a model can improve
+the median while leaving an unacceptable tail.  The rerun is the authoritative
+score: earlier experimental numbers used leave-one-out encodings that did not
+meet the handout's stricter ``earlier sales only'' rule and are not claimed here.
 
 \section{Where the model fails}
 \begin{figure}[h]
@@ -54,11 +92,23 @@ MAPE: mean absolute percentage error. Brackets: bootstrap 95\% interval.}
 \includegraphics[width=0.85\linewidth]{error_by_price_range.png}
 \caption{Absolute percentage error by sold-price decile.}
 \end{figure}
-% Add your own breakdowns: by month, property type, neighbourhood, size.
-\textit{Where errors are largest, and why you think so.}
+Errors rise in price bands and local groups with fewer comparable sales.  The
+off-market task is consistently harder because it lacks the seller's asking
+price.  Performance also varies by month, with later months showing sensitivity
+to market drift.  Text helps when remarks reveal renovation or condition, but
+synthetic or vague descriptions add little.  These patterns suggest that the
+next useful output is calibrated uncertainty by market segment, not just a
+single point estimate.
 
 \section{Limitations}
-\textit{What your model cannot do, and what you would try next.}
+The June--September hidden test remains the only truly unseen evaluation, so
+walk-forward improvement is evidence rather than a guarantee.  Rare groups are
+still noisy despite smoothing, and recency weighting cannot anticipate a sudden
+market shift.  The ensemble is also slower and harder to audit than a single
+model.  December--May was inspected during development, so future tuning should
+use nested time splits or a newly reserved period.  Next we would add
+segment-level uncertainty intervals and test whether simpler components can be
+removed without sacrificing accuracy.
 
 \section*{Outside data}
 % Every outside source, or write "None". Data may only cover periods up to and including May 2026.
@@ -72,7 +122,10 @@ Source & URL & Periods covered \\
 
 \section*{Reproducing our results}
 % The exact commands that produce your two submission files from a fresh copy of your repository.
-\texttt{pip install -r requirements.txt}\\
-\texttt{python run.py validate \&\& python run.py report \&\& python run.py predict \&\& python run.py check}
+\texttt{pip install -r gbt\_ensemble\_experiments/requirements-attempts.txt}\\
+\texttt{python gbt\_ensemble\_experiments/validate.py}\\
+\texttt{python run.py report}\\
+\texttt{python gbt\_ensemble\_experiments/train\_final.py}\\
+\texttt{python run.py check}
 
 \end{document}

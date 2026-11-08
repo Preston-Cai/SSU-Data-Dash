@@ -171,21 +171,21 @@ def main():
             "uses_after_sale_features": False,
         },
         "validation": {
-            "off_market": {"mape": 9.8465, "mdape": 7.2759},
-            "list_aware": {"mape": 5.2525, "mdape": 4.0810},
+            "off_market": {"mape": 9.81, "mdape": 7.27},
+            "list_aware": {"mape": 5.24, "mdape": 4.06},
             "weight_tuning_months": ["2025-09", "2025-10", "2025-11"],
             "official_months": ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"],
         },
         "tracks": {
             "off_market": {
                 "components": [off_recent, off_text, off_xgb],
-                "weights": [0.15, 0.20, 0.65],
-                "calibration": 0.9772745745864185,
+                "weights": [0.32, 0.19, 0.49],
+                "calibration": 0.9805010910351815,
             },
             "list_aware": {
                 "components": [list_regular, list_recent, list_text],
-                "weights": [0.35, 0.35, 0.30],
-                "calibration": 0.9865499704372777,
+                "weights": [0.16, 0.49, 0.35],
+                "calibration": 0.9900921001323401,
             },
         },
     }

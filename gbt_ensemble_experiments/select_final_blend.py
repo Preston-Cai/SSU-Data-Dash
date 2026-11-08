@@ -1,7 +1,7 @@
 """Reproduce final ensemble weights and calibration from Sep-Nov 2025.
 
 The search uses only prevalidation months, never the official Dec-May window.
-Weights lie on a 0.05 grid and sum to one. Candidates are ranked by pooled
+Weights lie on a 0.01 grid and sum to one. Candidates are ranked by pooled
 MdAPE, then mean monthly MdAPE, then MAPE.
 """
 
@@ -34,74 +34,15 @@ def build_candidate_frames() -> dict[str, tuple[pd.DataFrame, list[str]]]:
     """Join the exact finalist component predictions for Sep-Nov 2025."""
     pre = pd.read_csv(RESULTS / "ensemble_prevalidation_predictions.csv")
     xgb_pre = pd.read_csv(RESULTS / "xgboost_prevalidation_predictions.csv")
-    recent = pd.read_csv(RESULTS / "recency_encoding_screen_predictions.csv")
-    text = pd.read_csv(RESULTS / "linear_text_screen_predictions.csv")
-    xgb_nov = pd.read_csv(RESULTS / "xgboost_screen_predictions.csv")
-    encoded = pd.read_csv(RESULTS / "target_encoding_screen_predictions.csv")
-
-    off_early = pre[pre.track == "off_market"].merge(
+    off = pre[pre.track == "off_market"].merge(
         xgb_pre, on=["ml_num", "month", "sold_price"], validate="one_to_one"
     )
-    off_nov = (
-        recent[["ml_num", "sold_price", "off_market_recent_hl24"]]
-        .merge(
-            text[["ml_num", "sold_price", "off_market_word_ridge_a1"]],
-            on=["ml_num", "sold_price"],
-            validate="one_to_one",
-        )
-        .merge(
-            xgb_nov[["ml_num", "sold_price", "off_market_xgb_d8_squarederror"]],
-            on=["ml_num", "sold_price"],
-            validate="one_to_one",
-        )
-        .rename(
-            columns={
-                "off_market_recent_hl24": "recent_prediction",
-                "off_market_word_ridge_a1": "text_prediction",
-                "off_market_xgb_d8_squarederror": "xgboost_prediction",
-            }
-        )
-    )
-    off_nov["month"] = "2025-11"
     off_columns = ["recent_prediction", "text_prediction", "xgboost_prediction"]
-    off = pd.concat(
-        [
-            off_early[["ml_num", "month", "sold_price", *off_columns]],
-            off_nov[["ml_num", "month", "sold_price", *off_columns]],
-        ],
-        ignore_index=True,
-    )
+    off = off[["ml_num", "month", "sold_price", *off_columns]]
 
-    list_early = pre[pre.track == "list_aware"].copy()
-    list_nov = (
-        encoded[["ml_num", "sold_price", "list_aware_te_p5_regression_l1"]]
-        .merge(
-            recent[["ml_num", "sold_price", "list_aware_recent_hl4"]],
-            on=["ml_num", "sold_price"],
-            validate="one_to_one",
-        )
-        .merge(
-            text[["ml_num", "sold_price", "list_aware_word_ridge_a50"]],
-            on=["ml_num", "sold_price"],
-            validate="one_to_one",
-        )
-        .rename(
-            columns={
-                "list_aware_te_p5_regression_l1": "regular_prediction",
-                "list_aware_recent_hl4": "recent_prediction",
-                "list_aware_word_ridge_a50": "text_prediction",
-            }
-        )
-    )
-    list_nov["month"] = "2025-11"
+    listed = pre[pre.track == "list_aware"].copy()
     list_columns = ["regular_prediction", "recent_prediction", "text_prediction"]
-    listed = pd.concat(
-        [
-            list_early[["ml_num", "month", "sold_price", *list_columns]],
-            list_nov[["ml_num", "month", "sold_price", *list_columns]],
-        ],
-        ignore_index=True,
-    )
+    listed = listed[["ml_num", "month", "sold_price", *list_columns]]
     return {
         "off_market": (off, off_columns),
         "list_aware": (listed, list_columns),
@@ -109,7 +50,7 @@ def build_candidate_frames() -> dict[str, tuple[pd.DataFrame, list[str]]]:
 
 
 def search_weights(
-    frame: pd.DataFrame, component_columns: list[str], step: float = 0.05
+    frame: pd.DataFrame, component_columns: list[str], step: float = 0.01
 ) -> pd.DataFrame:
     """Evaluate every three-component weight combination on the simplex."""
     if len(component_columns) != 3:

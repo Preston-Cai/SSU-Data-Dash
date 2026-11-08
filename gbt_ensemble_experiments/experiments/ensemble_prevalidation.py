@@ -1,4 +1,4 @@
-"""Run the frozen ensemble components on September-October 2025."""
+"""Run the frozen ensemble components on September-November 2025."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ RESULTS = HERE.parent / "results"
 def main():
     listings = data.load("listings")
     frames = []
-    for month in pd.period_range("2025-09", "2025-10", freq="M"):
+    for month in pd.period_range("2025-09", "2025-11", freq="M"):
         homes = listings[listings.date_sold.dt.to_period("M") == month].copy()
         for track in ("off_market", "list_aware"):
             started = time.perf_counter()
