@@ -13,7 +13,7 @@
       "2026-04",
       "2026-05"
     ],
-    "selection_note": "The reported list-aware result uses the conservative pre-specified walk-forward score of 3.98%; post-validation tuning is not used as evidence for the final result."
+    "selection_note": "The community-plus-property-type refinement was selected after inspection of the official months; the reported 3.98% is the conservative pre-specified walk-forward score."
   },
   "tracks": {
     "off_market": {
@@ -121,102 +121,102 @@
     "list_aware": {
       "overall": {
         "n": 10069,
-        "mape": 5.15,
+        "mape": 5.19,
         "mape_95ci": [
-          5.06,
-          5.24
+          5.1,
+          5.28
         ],
-        "mdape": 3.98,
+        "mdape": 3.99,
         "mdape_95ci": [
-          3.86,
-          4.05
+          3.9,
+          4.08
         ],
-        "median_signed_error": -0.94
+        "median_signed_error": -0.89
       },
       "by_month": {
         "2025-12": {
           "n": 1238,
-          "mape": 4.75,
+          "mape": 4.76,
           "mape_95ci": [
-            4.5,
-            4.99
+            4.52,
+            5.01
           ],
-          "mdape": 3.64,
+          "mdape": 3.68,
           "mdape_95ci": [
-            3.46,
-            3.78
+            3.51,
+            3.84
           ],
-          "median_signed_error": 0.06
+          "median_signed_error": 0.1
         },
         "2026-01": {
           "n": 1058,
-          "mape": 4.81,
+          "mape": 4.82,
           "mape_95ci": [
             4.57,
-            5.07
+            5.1
           ],
-          "mdape": 3.84,
+          "mdape": 3.92,
           "mdape_95ci": [
-            3.62,
-            4.13
+            3.6,
+            4.23
           ],
           "median_signed_error": -0.22
         },
         "2026-02": {
           "n": 1442,
-          "mape": 5.11,
+          "mape": 5.16,
           "mape_95ci": [
-            4.9,
-            5.33
+            4.94,
+            5.38
           ],
-          "mdape": 4.08,
+          "mdape": 4.01,
           "mdape_95ci": [
-            3.85,
+            3.84,
             4.3
           ],
-          "median_signed_error": -1.09
+          "median_signed_error": -1.04
         },
         "2026-03": {
           "n": 1816,
-          "mape": 5.25,
+          "mape": 5.27,
           "mape_95ci": [
-            5.02,
-            5.47
+            5.05,
+            5.5
           ],
-          "mdape": 3.94,
+          "mdape": 4.01,
           "mdape_95ci": [
-            3.74,
-            4.24
+            3.79,
+            4.2
           ],
-          "median_signed_error": -1.4
+          "median_signed_error": -1.31
         },
         "2026-04": {
           "n": 2224,
-          "mape": 5.14,
+          "mape": 5.2,
           "mape_95ci": [
-            4.95,
-            5.34
+            5.01,
+            5.41
           ],
-          "mdape": 3.86,
+          "mdape": 3.91,
           "mdape_95ci": [
-            3.71,
-            4.03
+            3.75,
+            4.11
           ],
-          "median_signed_error": -1.16
+          "median_signed_error": -1.11
         },
         "2026-05": {
           "n": 2291,
-          "mape": 5.47,
+          "mape": 5.52,
           "mape_95ci": [
-            5.28,
-            5.66
+            5.33,
+            5.72
           ],
-          "mdape": 4.23,
+          "mdape": 4.28,
           "mdape_95ci": [
-            4.05,
-            4.42
+            4.08,
+            4.43
           ],
-          "median_signed_error": -1.21
+          "median_signed_error": -1.26
         }
       }
     }

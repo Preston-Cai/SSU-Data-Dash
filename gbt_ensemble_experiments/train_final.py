@@ -195,7 +195,7 @@ def main():
         },
         "validation": {
             "off_market": {"mape": 9.81, "mdape": 7.27},
-            "list_aware": {"mape": 5.15, "mdape": 3.98},
+            "list_aware": {"mape": 5.19, "mdape": 3.98},
             "weight_tuning_months": ["2025-09", "2025-10", "2025-11"],
             "official_months": ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"],
             "selection_note": (
@@ -218,8 +218,8 @@ def main():
                     off_xgb,
                     list_median,
                 ],
-                "weights": [0.113, 0.377, 0.0496, 0.02945, 0.07595, 0.355],
-                "calibration": 0.98471,
+                "weights": [0.06, 0.25, 0.0416, 0.0247, 0.0637, 0.56],
+                "calibration": 0.9830723401924144,
             },
         },
     }

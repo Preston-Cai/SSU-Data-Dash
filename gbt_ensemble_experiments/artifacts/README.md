@@ -4,7 +4,7 @@ Each timestamped directory is one completed final training run. The currently
 selected saved run is:
 
 ```text
-20261028-000439-310846/ensemble_checkpoint.pkl
+20261107-201132-343475/ensemble_checkpoint.pkl
 ```
 
 Use the full `ensemble_checkpoint.pkl` with `../predict_artifact.py`. The native

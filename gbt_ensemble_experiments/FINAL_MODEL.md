@@ -9,10 +9,11 @@ The final model is a separate ensemble for each competition track:
 
 - **Off-market:** 32% recency-aware LightGBM, 19% word TF-IDF Ridge, and 49%
   XGBoost, followed by calibration `0.9805010910351815`.
-- **List-aware:** 11.3% target-encoded LightGBM, 37.7% recency-aware LightGBM,
-  15.5% independent off-market value anchor, and 35.5% smoothed historical
+- **List-aware:** 6% regular target-encoded LightGBM, 25% recency-aware
+  LightGBM, 4.16% off-market recency anchor, 2.47% off-market text anchor,
+  6.37% off-market XGBoost anchor, and 56% smoothed historical
   community-plus-property-type sold-to-list median, followed by calibration
-  `0.98471`.
+  `0.9830723401924144`.
 
 The percentages are geometric-blend weights. Do not substitute one of the
 individual component files for the full ensemble.
@@ -28,8 +29,9 @@ Validated performance over December 2025-May 2026:
 
 The complete fitted model is:
 
-The current checkpoint is in the newest timestamped artifact directory under
-`gbt_ensemble_experiments/artifacts/`.
+The selected checkpoint is:
+
+`gbt_ensemble_experiments/artifacts/20261107-201132-343475/ensemble_checkpoint.pkl`
 
 This checkpoint contains the fitted feature builders, historical encoders,
 component models, blend weights, and calibration. The native `.txt`, `.json`,

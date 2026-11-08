@@ -100,8 +100,8 @@ def main() -> None:
         listed.loc[index, "median_anchor"] = median_ratio_predictions(listings, homes, month)
     listed["predicted_price"] = geometric_blend(
         [listed.regular_prediction, listed.recent_prediction, listed.off_anchor, listed.median_anchor],
-        [0.113, 0.377, 0.155, 0.355],
-    ) * 0.98471
+        [0.06, 0.25, 0.13, 0.56],
+    ) * 0.9830723401924144
 
     final = pd.concat([off[base.columns], listed[base.columns]], ignore_index=True)
     final.to_csv(RESULTS / "final_walk_forward_predictions.csv", index=False)

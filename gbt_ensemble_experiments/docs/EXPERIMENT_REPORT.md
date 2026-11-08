@@ -324,7 +324,7 @@ project's `.venv`:
 ```
 
 The finalized artifact from this run is
-`artifacts/20261028-000439-310846/`. The most important files are:
+`artifacts/20261107-201132-343475/`. The most important files are:
 
 - `ensemble_checkpoint.pkl`: the complete reloadable ensemble;
 - `manifest.json`: hashes, weights, calibration, validation summary, and time;

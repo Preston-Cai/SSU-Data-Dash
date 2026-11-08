@@ -41,7 +41,7 @@ Run commands from the repository root in PowerShell:
 
 # Predict with the existing checkpoint without retraining.
 .\.venv\Scripts\python.exe "gbt_ensemble_experiments\predict_artifact.py" `
-  "gbt_ensemble_experiments\artifacts\20261028-000439-310846\ensemble_checkpoint.pkl"
+  "gbt_ensemble_experiments\artifacts\20261107-201132-343475\ensemble_checkpoint.pkl"
 
 # Rebuild the six-month component predictions and final validation report (slow).
 .\.venv\Scripts\python.exe "gbt_ensemble_experiments\validate.py"
