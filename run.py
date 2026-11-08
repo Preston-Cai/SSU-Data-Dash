@@ -1,9 +1,13 @@
-"""Run the whole pipeline. From this folder:
+"""Submission and starter entry points. From this folder:
 
-    python run.py validate   test the models on the last six months of sales
-    python run.py report     score those predictions and draw a figure
-    python run.py predict    predict the test homes and write the two submission files
-    python run.py check      check the submission files before you hand them in
+    python run.py validate          validate the final ensemble (slow)
+    python run.py report            score predictions and draw a figure
+    python run.py predict           train if needed, then write final submissions
+    python run.py check             check the submission files
+    python run.py validate-starter  run the retained starter baselines
+
+Pass ``--reuse-results`` after ``validate`` to export the existing final
+walk-forward predictions without refitting.
 
 On Windows, type py instead of python if python is not found.
 """
@@ -20,12 +24,18 @@ from check_submission import check_all
 
 ROOT = Path(__file__).parent
 TRACKS = ["off_market", "list_aware"]
+EXPECTED_LIST_VALIDATION = {"mdape": 3.98, "mape": 5.19}
+EXPECTED_OFF_WEIGHTS = [0.32, 0.19, 0.49]
+EXPECTED_OFF_CALIBRATION = 0.9805010910351815
+EXPECTED_LIST_WEIGHTS = [0.06, 0.25, 0.0416, 0.0247, 0.0637, 0.56]
+EXPECTED_LIST_CALIBRATION = 0.9830723401924144
 # Walk-forward validation: each of these months is predicted by models trained only
 # on the sales before that month, the same way the real test works.
 VALIDATION_MONTHS = pd.period_range("2025-12", "2026-05", freq="M")
 
 
-def validate():
+def validate_starter():
+    """Run the retained models.py/features.py baseline validation."""
     listings = data.load("listings")
     results = []
     for month in VALIDATION_MONTHS:
@@ -43,6 +53,13 @@ def validate():
     path.parent.mkdir(exist_ok=True)
     pd.concat(results).to_csv(path, index=False)
     print(f"Wrote {path.relative_to(ROOT)}")
+
+
+def validate():
+    """Run the final GBT ensemble validation entry point."""
+    from gbt_ensemble_experiments.validate import main as validate_gbt
+
+    return validate_gbt(sys.argv[2:])
 
 
 def bootstrap_ci(values, statistic, repeats=1000):
@@ -122,6 +139,9 @@ def error_by_price_range(predictions):
     Want more figures? Copy this function and group the errors by something else:
     house_type_name, month, or community (add it to the predictions file in validate()).
     """
+    import matplotlib
+
+    matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
     fig, ax = plt.subplots(figsize=(8, 4.5))
@@ -150,7 +170,8 @@ def error_by_price_range(predictions):
     plt.close(fig)
 
 
-def predict():
+def predict_starter():
+    """Run the retained models.py baseline predictor for starter tests only."""
     listings = data.load("listings")
     (ROOT / "submissions").mkdir(exist_ok=True)
     for track in TRACKS:
@@ -158,18 +179,91 @@ def predict():
         model = models.make_model(track).fit(listings)
         predicted = model.predict(homes)
         path = ROOT / "submissions" / f"submission_{track}.csv"
+        pd.DataFrame({"ml_num": homes["ml_num"], "predicted_price": np.round(predicted)}).to_csv(
+            path, index=False
+        )
+        print(f"Wrote {path.relative_to(ROOT)} ({len(homes):,} homes)")
+
+
+def predict():
+    """Train if needed, then write submissions with the selected GBT ensemble."""
+    from gbt_ensemble_experiments.predict_artifact import (
+        load_checkpoint,
+        predict as predict_checkpoint,
+    )
+
+    def matches_selected(loaded):
+        validation = loaded.get("validation", {}).get("list_aware", {})
+        tracks = loaded.get("tracks", {})
+        off_model = tracks.get("off_market", {})
+        list_model = tracks.get("list_aware", {})
+        components = list_model.get("components", [])
+        median_anchor = components[-1] if len(components) == 6 else {}
+        rules = loaded.get("rules", {})
+        return (
+            validation == EXPECTED_LIST_VALIDATION
+            and loaded.get("training_cutoff") == "2026-06-01"
+            and rules.get("uses_external_avm") is False
+            and rules.get("off_market_uses_list_price") is False
+            and rules.get("uses_after_sale_features") is False
+            and off_model.get("weights") == EXPECTED_OFF_WEIGHTS
+            and off_model.get("calibration") == EXPECTED_OFF_CALIBRATION
+            and list_model.get("weights") == EXPECTED_LIST_WEIGHTS
+            and list_model.get("calibration") == EXPECTED_LIST_CALIBRATION
+            and median_anchor.get("kind") == "median_ratio"
+            and median_anchor.get("group_columns", ["community"]) == ["community"]
+            and median_anchor.get("prior") == 50.0
+        )
+
+    def find_selected_checkpoint():
+        artifact_root = ROOT / "gbt_ensemble_experiments" / "artifacts"
+        candidates = reversed(sorted(artifact_root.glob("*/ensemble_checkpoint.pkl")))
+        for candidate in candidates:
+            loaded = load_checkpoint(candidate)
+            if matches_selected(loaded):
+                return candidate, loaded
+        return None, None
+
+    checkpoint_path, checkpoint = find_selected_checkpoint()
+    if checkpoint is None:
+        print(
+            "No matching 3.98% MdAPE / 5.19% MAPE checkpoint found; "
+            "training the final ensemble now...",
+            flush=True,
+        )
+        from gbt_ensemble_experiments.train_final import main as train_final
+
+        train_final()
+        checkpoint_path, checkpoint = find_selected_checkpoint()
+        if checkpoint is None:
+            sys.exit("Training finished without producing the selected checkpoint configuration.")
+
+    (ROOT / "submissions").mkdir(exist_ok=True)
+    for track in TRACKS:
+        homes = data.load(track)
+        predicted = predict_checkpoint(checkpoint, homes, track)
+        path = ROOT / "submissions" / f"submission_{track}.csv"
         pd.DataFrame({"ml_num": homes["ml_num"], "predicted_price": np.round(predicted)}).to_csv(path, index=False)
         print(f"Wrote {path.relative_to(ROOT)} ({len(homes):,} homes)")
+    print(f"Checkpoint: {checkpoint_path}")
 
 
 def check():
     return check_all(ROOT / "submissions")
 
 
-COMMANDS = {"validate": validate, "report": report, "predict": predict, "check": check}
+COMMANDS = {
+    "validate": validate,
+    "validate-starter": validate_starter,
+    "report": report,
+    "predict": predict,
+    "check": check,
+}
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2 or sys.argv[1] not in COMMANDS:
+    if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:
         sys.exit(__doc__)
+    if len(sys.argv) > 2 and sys.argv[1] != "validate":
+        sys.exit(f"Unexpected arguments for `{sys.argv[1]}`.\n\n{__doc__}")
     result = COMMANDS[sys.argv[1]]()
     sys.exit(1 if result is False else 0)

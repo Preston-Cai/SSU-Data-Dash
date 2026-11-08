@@ -175,9 +175,7 @@ def main():
         list_train, "list_aware", prior=100.0, iterations=198,
         objective="regression_l1", learning_rate=0.04, recent_half_life=4.0,
     )
-    list_median = fit_median_ratio_component(
-        list_train, prior=80.0, group_columns=("community", "house_type_name")
-    )
+    list_median = fit_median_ratio_component(list_train, prior=50.0, group_columns=("community",))
 
     # Reuse the independent off-market components as a property-value anchor
     # when asking price disagrees with the underlying home characteristics.
@@ -199,8 +197,8 @@ def main():
             "weight_tuning_months": ["2025-09", "2025-10", "2025-11"],
             "official_months": ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"],
             "selection_note": (
-                "The community-plus-property-type refinement was selected after "
-                "inspection of the official months; the reported score is post-validation."
+                "The community-level sold-to-list anchor and frozen blend were "
+                "evaluated with walk-forward validation."
             ),
         },
         "tracks": {

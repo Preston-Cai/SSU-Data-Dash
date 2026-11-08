@@ -1,5 +1,22 @@
 # SSU Data Dash: predict Toronto home prices
 
+## Final submission model
+
+The final submission model is **not** the starter implementation in
+`models.py` and `features.py`.  It is the fitted ensemble in
+[`gbt_ensemble_experiments/`](gbt_ensemble_experiments/), documented in
+[`gbt_ensemble_experiments/FINAL_MODEL.md`](gbt_ensemble_experiments/FINAL_MODEL.md).
+For the exact submitted checkpoint, CSV row counts, validation reference, and
+verification commands, see [`SUBMISSION_README.md`](SUBMISSION_README.md).
+The final four-page submission report is [`report/report.pdf`](report/report.pdf).
+
+`python run.py validate` and `python run.py predict` are wired to that final
+ensemble. Prediction writes the two official CSVs in `submissions/`. The
+starter modules are retained only as the original baseline/reference
+implementation. `run.py predict` reuses a matching fitted checkpoint when one
+exists and automatically trains the final ensemble when one does not, as
+detailed in `SUBMISSION_README.md`.
+
 Start with the case handout, [`handout.md`](handout.md), and the judging rubric, [`rubric.md`](rubric.md).
 
 Two tracks:
@@ -16,8 +33,10 @@ All of it is synthetic.
 Python 3.10 or newer (3.11+ on macOS 27):
 
 ```
-pip install -r requirements.txt
+pip install -r gbt_ensemble_experiments/requirements.txt
 ```
+
+The root `requirements.txt` is retained for the starter baseline only.
 
 The data downloads itself on first use. No Python? Use the
 [Colab notebook](https://colab.research.google.com/github/erwinzhang7/SSU-Data-Dash/blob/main/notebooks/quickstart.ipynb).
@@ -26,23 +45,26 @@ Prefer R? See `r/baseline.R`.
 ## Commands
 
 ```
-python run.py validate   # test on Dec 2025 to May 2026
-python run.py report     # results table and a figure
-python run.py predict    # write both submission files
-python run.py check      # check them
+python run.py validate  # final GBT walk-forward validation (slow)
+python run.py report    # results table and figure
+python run.py predict   # train if needed; write final GBT submission files
+python run.py check     # check both CSVs
 ```
 
 On Windows, use `py` if `python` is not found.
 
-## What to edit
+## Retained starter files
 
-- **`features.py`**: the features.
-- **`models.py`**: the models. Two simple baselines to beat: list price (list-aware) and the
-  10 nearest earlier sales (off-market). `FeatureModel` (gradient-boosted trees) is ready to switch on.
+- **`features.py`**: starter feature examples; not used by the final model.
+- **`models.py`**: starter baselines; not used by final prediction. They remain available for
+  comparison through `python run.py validate-starter`.
 
 ## Validation
 
-`validate` predicts each month from the sales before it, as in the real test. A random split lets
+`python run.py validate` predicts each month with the final ensemble using sales
+from before that month, as in the real test. Use `python run.py validate
+--reuse-results` to export the saved walk-forward predictions without refitting.
+The explicitly named `validate-starter` command runs the retained baselines. A random split lets
 the model see the future and makes your score look better than it is. Judges compare your
 validation error with your hidden-test error.
 
@@ -64,7 +86,8 @@ SYN-0123456,815000
 
 The prepared final files are in `submissions/`. See
 [`SUBMISSION_README.md`](SUBMISSION_README.md) for the exact checkpoint,
-verification command, row counts, and conservative validation scores.
+verification command, row counts, and conservative validation scores, and see
+[`report/report.pdf`](report/report.pdf) for the final report.
 
 ## Rules
 

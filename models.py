@@ -1,10 +1,17 @@
-"""EDIT ME: the models. Every model has the same two steps:
+"""STARTER CODE ONLY -- NOT THE FINAL SUBMISSION MODEL.
+
+The selected model, training code, and documentation are in
+``gbt_ensemble_experiments/``. ``python run.py predict`` loads that final
+ensemble directly and does not call this module. This file is retained for the
+original baseline and for ``python run.py validate-starter`` comparisons.
+
+Every starter model has the same two steps:
 
     model.fit(train)        train = past sales, including sold_price and date_sold
     model.predict(homes)    homes = homes to value, with only the columns of a test file;
                             returns one predicted sold price per home
 
-make_model() picks the model for each track. The two starting models are baselines:
+make_model() picks the starter model for each track. The two models are baselines:
 deliberately simple, so you can measure how much your own ideas add.
 """
 import numpy as np

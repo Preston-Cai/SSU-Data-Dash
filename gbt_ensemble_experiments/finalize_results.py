@@ -45,8 +45,8 @@ def median_ratio_predictions(
     listings: pd.DataFrame,
     homes: pd.DataFrame,
     month: str,
-    group_columns=("community", "house_type_name"),
-    prior=80.0,
+    group_columns=("community",),
+    prior=50.0,
 ) -> np.ndarray:
     cutoff = pd.Period(month).start_time
     train = listings[
@@ -111,9 +111,8 @@ def main() -> None:
             "weight_selection_months": ["2025-09", "2025-10", "2025-11"],
             "untouched_official_months": ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"],
             "selection_note": (
-                "The community-plus-property-type refinement was selected after "
-                "inspection of the official months; the reported 3.98% is the "
-                "conservative pre-specified walk-forward score."
+                "The reported 3.98% is the conservative pre-specified "
+                "walk-forward score for the community-level anchor blend."
             ),
         },
         "tracks": {},

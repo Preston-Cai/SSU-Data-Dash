@@ -16,7 +16,7 @@
 \maketitle
 
 \noindent\begin{tabular}{@{}ll}
-\textbf{Video (YouTube):} & \url{https://youtu.be/YOUR-VIDEO} \\
+\textbf{Video (YouTube):} & \url{https://www.youtube.com/watch?v=CMsnPnV_6hI} \\
 \textbf{Code and submission files (GitHub):} & \url{https://github.com/Preston-Cai/SSU-Data-Dash} \\
 \end{tabular}
 
@@ -25,9 +25,11 @@ We built separate ensembles for off-market and list-aware valuation.  Each combi
 boosted trees using property and strictly historical local-sale features with a
 TF--IDF text model that reads listing remarks.  In six-month walk-forward
 validation (December 2025--May 2026), the current rerun produced the results in
-Table~1.  Our main finding is that carefully timed local-sale history matters
-more than changing tree libraries: a neighbourhood feature is useful only when
-it is constructed from sales already known on the prediction date.
+Table~1.  Our strongest result came from combining complementary signals:
+recent local-sale history, listing text, and nonlinear property features.
+The MLP and CatBoost alternatives added complexity without enough improvement.
+All historical features were constructed from sales available before each
+prediction date to preserve honest walk-forward validation.
 
 \section{Data and features}
 % Which columns you used, what you built from them, and anything you dropped and why.
@@ -62,16 +64,17 @@ encoder uses a four-month half-life.
 % One paragraph per track. Off-market has no list price; list-aware does. Explain how your two
 % models differ and why.
 The off-market prediction is a calibrated geometric blend of recency-aware
-LightGBM (32\%), word TF--IDF Ridge (19\%), and XGBoost (49\%).  The list-aware
-blend uses ordinary target-encoded LightGBM (11.3\%), recency-aware LightGBM
-(37.7\%), an independent off-market value anchor (15.5\%), and a smoothed
-historical community-plus-property-type sold-to-list median (35.5\%).  Trees capture nonlinear interactions
-among structure, location, and earlier comparable sales; Ridge contributes a
+LightGBM (32\%), word TF--IDF Ridge (19\%), and XGBoost (49\%).  For the
+list-aware track, the largest component (56\%) adjusts each home's asking
+price by its community's smoothed historical sold-to-list ratio.  We combine
+it with standard past-only target-encoded LightGBM (6\%), recency-aware
+LightGBM (25\%), and three estimates that do not use the home's asking price:
+recency LightGBM (4.16\%), text Ridge (2.47\%), and XGBoost (6.37\%).  Trees capture nonlinear interactions among
+structure, location, and earlier comparable sales; Ridge contributes a
 different view through listing language.  We blend them because their errors
 are not identical, even when a component is weaker by itself.  The specialized
-list-aware anchor helps decide how much to trust an asking price by comparing it
-with both prior local sale ratios for the same property family and a valuation
-that never saw list price.
+list-aware component captures information in the seller's asking price, while
+the other components reduce dependence on that one signal.
 
 We also tested a dense PyTorch MLP with standardized numeric features,
 property/style indicators, and learned municipality/community embeddings.  It
@@ -107,7 +110,7 @@ September--November 2025.  The reported list-aware result is the conservative
 3.98\% score from the pre-specified walk-forward evaluation; later
 post-validation tuning is not used as evidence for the final result.
 Across the six official months, monthly MdAPE ranged from 6.98\% to 7.63\%
-off-market and from 3.64\% to 4.08\% list-aware; May was the weakest
+off-market and from 3.63\% to 4.27\% list-aware; May was the weakest
 off-market month, consistent with market drift rather than a single anomalous
 row.
 
@@ -139,14 +142,34 @@ the exploratory screening scripts.
 \end{figure}
 Errors rise sharply in the expensive tail: the highest sold-price decile is
 about 13\% MdAPE off-market versus about 6--7\% in the cheapest deciles, while
-list-aware error rises to about 5\% from roughly 3\%.  Sparse communities and
-rare property combinations also fail more often because their historical
-encodings are pulled toward the market prior.  The off-market task is harder
-because it lacks the seller's asking price; the month-by-month range above also
-shows sensitivity to market drift.  Text helps when remarks reveal renovation
-or condition, but synthetic or vague descriptions add little.  These patterns
-suggest calibrated uncertainty by price and local-history support, not just a
-single point estimate.
+list-aware error rises to about 5\% from roughly 3\%.  The corrected,
+past-only walk-forward analysis gives the following more specific breakdown:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lrrr}
+\toprule
+Segment & Off-market & List-aware & Homes/track \\
+\midrule
+Highest sold-price decile & 13.42\% & 5.32\% & 1,007 \\
+Semi-detached & 9.56\% & 5.84\% & 1,034 \\
+Communities with 200--999 earlier sales & 7.74\% & 4.20\% & 4,364 \\
+Communities with at least 1,000 earlier sales & 6.96\% & 3.81\% & 5,697 \\
+May 2026 & 7.63\% & 4.27\% & 2,291 \\
+\bottomrule
+\end{tabular}
+\caption{Corrected walk-forward MdAPE by selected segment.}
+\end{table}
+
+Expensive and semi-detached homes appear to have more difficult price
+variation, while communities with less prior history provide weaker local
+signals.  May's higher errors are consistent with market drift.  These are
+plausible interpretations, not causal conclusions.  The off-market task is
+harder because it lacks the seller's asking price; text helps when remarks
+reveal renovation or condition, but synthetic or vague descriptions add little.
+These patterns suggest calibrated uncertainty by price and local-history
+support, not just a single point estimate.
 
 \section{Limitations}
 The June--September hidden test remains the only truly unseen evaluation, so
@@ -170,10 +193,14 @@ Source & URL & Periods covered \\
 
 \section*{Reproducing our results}
 % The exact commands that produce your two submission files from a fresh copy of your repository.
-\texttt{pip install -r gbt\_ensemble\_experiments/requirements-attempts.txt}\\
-\texttt{python gbt\_ensemble\_experiments/validate.py}\\
+\texttt{pip install -r gbt\_ensemble\_experiments/requirements.txt}\\
+\texttt{python run.py validate}\\
 \texttt{python run.py report}\\
-\texttt{python gbt\_ensemble\_experiments/train\_final.py}\\
+\texttt{python run.py predict}\\
 \texttt{python run.py check}
+
+On an Intel Core Ultra 7 155H, fitting the final submission model took about
+108 seconds; the complete six-month walk-forward rebuild took 778 seconds
+(12 minutes 58 seconds).
 
 \end{document}

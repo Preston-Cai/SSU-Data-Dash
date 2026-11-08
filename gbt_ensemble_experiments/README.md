@@ -24,7 +24,7 @@ gbt_ensemble_experiments/
 ├── validate.py               walk-forward validation and starter CSV export
 ├── select_final_blend.py     reproduce weights and calibration from Sep-Nov
 ├── finalize_results.py       build the frozen validation blend/report
-├── requirements-attempts.txt isolated Python dependencies
+├── requirements.txt          final-model Python dependencies
 ├── docs/                     accessible article and technical report
 ├── experiments/              exploratory and walk-forward scripts
 ├── results/                  validation predictions and experiment tables

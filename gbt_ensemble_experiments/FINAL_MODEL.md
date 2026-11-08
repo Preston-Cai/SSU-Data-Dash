@@ -11,8 +11,8 @@ The final model is a separate ensemble for each competition track:
   XGBoost, followed by calibration `0.9805010910351815`.
 - **List-aware:** 6% regular target-encoded LightGBM, 25% recency-aware
   LightGBM, 4.16% off-market recency anchor, 2.47% off-market text anchor,
-  6.37% off-market XGBoost anchor, and 56% smoothed historical
-  community-plus-property-type sold-to-list median, followed by calibration
+  6.37% off-market XGBoost anchor, and 56% smoothed historical community-level
+  sold-to-list median, followed by calibration
   `0.9830723401924144`.
 
 The percentages are geometric-blend weights. Do not substitute one of the
@@ -67,7 +67,7 @@ existing artifact.
 If the isolated dependencies are missing, install them first:
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r "gbt_ensemble_experiments\requirements-attempts.txt"
+.\.venv\Scripts\python.exe -m pip install -r "gbt_ensemble_experiments\requirements.txt"
 ```
 
 ## Predict without retraining

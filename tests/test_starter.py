@@ -136,8 +136,8 @@ def test_whole_pipeline_on_tiny_data(tmp_path, monkeypatch):
     monkeypatch.setenv("DATA_DIR", str(folder))
     monkeypatch.setattr(run, "ROOT", tmp_path)
 
-    run.validate()
+    run.validate_starter()
     run.report()
-    run.predict()
+    run.predict_starter()
     assert run.check()
     assert (tmp_path / "figures" / "error_by_price_range.png").exists()

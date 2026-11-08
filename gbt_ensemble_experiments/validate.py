@@ -2,11 +2,13 @@
 
 Full recomputation (slow):
 
-    python gbt_ensemble_experiments/validate.py
+    python run.py validate
 
 Export the already-computed validation predictions without retraining:
 
-    python gbt_ensemble_experiments/validate.py --reuse-results
+    python run.py validate --reuse-results
+
+Calling this file directly with the same optional flag is equivalent.
 
 After either command, the normal starter report works unchanged:
 

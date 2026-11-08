@@ -1,4 +1,11 @@
-"""EDIT ME: turn a table of homes into numbers a model can learn from.
+"""STARTER CODE ONLY -- NOT THE FINAL SUBMISSION FEATURES.
+
+The selected feature builders and fitted ensemble are in
+``gbt_ensemble_experiments/``. ``python run.py predict`` uses that pipeline
+directly. This file is retained for the original ``FeatureModel`` example in
+``models.py`` and for ``python run.py validate-starter`` experimentation.
+
+These starter functions turn a table of homes into numbers a model can learn from.
 
 Each function gets a table of homes with the columns of its test file (so never
 sold_price or date_sold) and returns a table of numbers, one row per home.

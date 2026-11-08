@@ -309,7 +309,7 @@ Run commands from the repository root in PowerShell. The experiment used the
 project's `.venv`:
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r "gbt_ensemble_experiments\requirements-attempts.txt"
+.\.venv\Scripts\python.exe -m pip install -r "gbt_ensemble_experiments\requirements.txt"
 
 # Rebuild the final six-month component predictions and report. This is slow.
 .\.venv\Scripts\python.exe "gbt_ensemble_experiments\validate.py"
