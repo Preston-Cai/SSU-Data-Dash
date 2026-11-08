@@ -43,11 +43,10 @@
 - “The timing rule also applies inside training: each training home uses only sales with an earlier sale date.”
 - “Homes sold on the same day are processed as a batch, so they cannot reveal their prices to one another.”
 - “Across ten thousand and sixty-nine validation homes, off-market MdAPE was seven point two seven percent.”
-- “The current list-aware development version reached three point nine five percent.”
+- “The conservative list-aware validation result was three point nine eight percent.”
 - “That means half of predictions missed by less than those percentages.”
-- “The corresponding MAPE values were nine point eight one percent and five point one five percent.”
-- “There is an important qualification: the community-plus-property-type refinement was chosen after inspecting December through May.”
-- “So three point nine five percent is a useful development score, while three point nine eight percent remains the more conservative independently selected benchmark.”
+- “The corresponding MAPE values were nine point eight one percent and five point one nine percent.”
+- “These are the conservative scores we use when describing validation performance.”
 
 ## Where it fails — 3:35–4:35
 
