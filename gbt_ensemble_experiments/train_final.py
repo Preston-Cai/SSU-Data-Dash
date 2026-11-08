@@ -172,8 +172,6 @@ def main():
         list_train, "list_aware", prior=100.0, iterations=198,
         objective="regression_l1", learning_rate=0.04, recent_half_life=4.0,
     )
-    print("Training list-aware text Ridge...", flush=True)
-    list_text = fit_text_component(list_train, "list_aware", alpha=50.0)
     list_median = fit_median_ratio_component(list_train, prior=50.0)
 
     # Reuse the independent off-market components as a property-value anchor
@@ -230,7 +228,6 @@ def main():
     list_regular["model"].booster_.save_model(run_dir / "list_aware_regular_lightgbm.txt")
     list_recent["model"].booster_.save_model(run_dir / "list_aware_recency_lightgbm.txt")
     joblib.dump(off_text["model"], run_dir / "off_market_text_ridge.joblib")
-    joblib.dump(list_text["model"], run_dir / "list_aware_text_ridge.joblib")
 
     for track in ("off_market", "list_aware"):
         homes = data.load(track)

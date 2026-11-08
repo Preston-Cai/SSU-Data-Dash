@@ -15,7 +15,6 @@ venv/
 .vscode/
 .DS_Store
 .Rhistory
-report/*.pdf
 
 # Generated MLP experiment artifacts (keep mlp_attempts source tracked)
 mlp_attempts/checkpoints/
