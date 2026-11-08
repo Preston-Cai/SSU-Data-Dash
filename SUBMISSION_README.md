@@ -16,7 +16,7 @@ ml_num,predicted_price
 They were generated from:
 
 ```text
-gbt_ensemble_experiments/artifacts/20261107-210017-299182/ensemble_checkpoint.pkl
+gbt_ensemble_experiments/artifacts/20261107-201132-343475/ensemble_checkpoint.pkl
 ```
 
 ## Verify the files
@@ -38,7 +38,7 @@ submission_list_aware.csv: OK
 
 ```powershell
 .\.venv\Scripts\python.exe gbt_ensemble_experiments\predict_artifact.py `
-  gbt_ensemble_experiments\artifacts\20261107-210017-299182\ensemble_checkpoint.pkl `
+  gbt_ensemble_experiments\artifacts\20261107-201132-343475\ensemble_checkpoint.pkl `
   --output-dir submissions
 ```
 
