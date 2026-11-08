@@ -22,16 +22,14 @@ Validated performance over December 2025-May 2026:
 | Track | MAPE | MdAPE |
 |---|---:|---:|
 | off-market | 9.81% | 7.27% |
-| list-aware | 5.15% | 3.95% |
+| list-aware | 5.19% | 3.98% |
 
 ## Current saved model
 
 The complete fitted model is:
 
-```text
-Run `python gbt_ensemble_experiments/train_final.py`; the newest timestamped
-artifact directory contains `ensemble_checkpoint.pkl`.
-```
+The current checkpoint is in the newest timestamped artifact directory under
+`gbt_ensemble_experiments/artifacts/`.
 
 This checkpoint contains the fitted feature builders, historical encoders,
 component models, blend weights, and calibration. The native `.txt`, `.json`,

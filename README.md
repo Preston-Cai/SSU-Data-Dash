@@ -62,6 +62,10 @@ SYN-0123456,815000
 
 `predict` writes both; run `check` before you hand in. Deadline: see the case email.
 
+The prepared final files are in `submissions/`. See
+[`SUBMISSION_README.md`](SUBMISSION_README.md) for the exact checkpoint,
+verification command, row counts, and conservative validation scores.
+
 ## Rules
 
 - Outside data only if it covers May 2026 or earlier. List every source with its URL.
