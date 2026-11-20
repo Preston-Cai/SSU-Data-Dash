@@ -1,5 +1,6 @@
 # SSU Data Dash: predict Toronto home prices
-
+## Our Competition Result
+See our final competition result, placement, scores, and feedback: [`Competition Results`](7th_place_competition_result.pdf)
 ## Our Final submission model
 
 | Purpose | Link |
